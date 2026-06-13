@@ -1,0 +1,2843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeAcademy - Master the Markets. Trade with Confidence.</title>
+  <meta name="description" content="Learn proven FOREX and general trading strategies from experienced traders. Simple, logical, practical trading education for beginners to advanced.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* -------------------------------------------------------------
+       DESIGN SYSTEM & CSS VARIABLES
+       ------------------------------------------------------------- */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text-primary: #0a0a0a;
+      --text-secondary: #4b5563;
+      --text-muted: #9ca3af;
+      
+      --accent: #3b82f6;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      
+      --bg-dark: #0a0a0a;
+      --bg-dark-surface: #121212;
+      --border-dark: #1f1f1f;
+      
+      --border-color: #e5e7eb;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --transition-speed: 0.2s;
+    }
+
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background-color: var(--bg-primary);
+    }
+
+    body {
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Section margins & offsets for sticky nav */
+    section {
+      padding: 6rem 1.5rem;
+      scroll-margin-top: 72px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 3.5rem; /* 56px */
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 2.25rem; /* 36px */
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      margin: 0.75rem auto 0 auto;
+    }
+
+    p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--transition-speed);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      border-radius: 4px; /* Crisp, sharp corners */
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-secondary);
+    }
+
+    .btn-outline-blue {
+      background-color: transparent;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline-blue:hover {
+      background-color: var(--accent-light);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Layout Containers */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background-color: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* IntersectionObserver Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* -------------------------------------------------------------
+       1. NAVBAR SECTION
+       ------------------------------------------------------------- */
+    .header-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background-color: var(--bg-primary);
+      z-index: 1000;
+      transition: border-bottom var(--transition-speed);
+      border-bottom: 1px solid transparent;
+    }
+
+    .header-nav.scrolled {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    /* -------------------------------------------------------------
+       2. HERO SECTION
+       ------------------------------------------------------------- */
+    .hero-section {
+      background-color: var(--bg-primary);
+      padding-top: 8rem;
+      padding-bottom: 6rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text .subtext {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    /* SVG Trading Chart Container */
+    .chart-container {
+      background-color: #0b0f19; /* High end dark trading card */
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      padding: 1.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .trading-chart-svg {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+    }
+
+    /* -------------------------------------------------------------
+       3. ABOUT / INSTRUCTOR STORY
+       ------------------------------------------------------------- */
+    .about-section {
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-avatar-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-content .story-p {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .highlight-box {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .highlight-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .highlight-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    /* -------------------------------------------------------------
+       4. COURSES SECTION
+       ------------------------------------------------------------- */
+    .courses-section {
+      background-color: var(--bg-secondary);
+    }
+
+    .courses-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      margin-top: -2rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Tabs Component */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+
+    .tab-btn.active {
+      background-color: var(--text-primary);
+      color: var(--bg-primary);
+      border-color: var(--text-primary);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Courses Grids */
+    .individual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Course Cards */
+    .course-card {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color var(--transition-speed), transform var(--transition-speed);
+      position: relative;
+    }
+
+    .course-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .course-banner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding-left: 1.5rem;
+      color: var(--bg-primary);
+    }
+
+    .course-icon-svg {
+      color: var(--bg-primary);
+    }
+
+    .course-body {
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .course-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .course-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.75rem;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .course-price-row {
+      margin-top: auto;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .course-price-label {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .course-price {
+      font-size: 1.625rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .price-original {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-right: 0.25rem;
+    }
+
+    .price-discounted {
+      font-size: 1.625rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* Combo Specific elements */
+    .combo-card {
+      border-top: 4px solid var(--accent);
+    }
+
+    .combo-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: var(--accent);
+      color: var(--bg-primary);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .combo-includes {
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      margin-bottom: 1.25rem;
+    }
+
+    .combo-includes-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .combo-includes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .combo-includes-list li {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .combo-includes-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.8125rem;
+    }
+
+    .combo-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      background-color: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+
+    /* -------------------------------------------------------------
+       5. WHY CHOOSE US
+       ------------------------------------------------------------- */
+    .why-choose-us {
+      background-color: var(--bg-dark);
+      color: var(--bg-primary);
+    }
+
+    .why-choose-us h2 {
+      margin-bottom: 4rem;
+    }
+
+    .why-choose-us h2::after {
+      background-color: var(--accent);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .why-card {
+      background-color: var(--bg-dark-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      padding: 2.25rem 1.75rem;
+      transition: border-color var(--transition-speed);
+    }
+
+    .why-card:hover {
+      border-color: var(--accent);
+    }
+
+    .why-icon {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .why-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .why-card-desc {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------
+       6. HOW IT WORKS
+       ------------------------------------------------------------- */
+    .how-it-works {
+      background-color: var(--bg-secondary);
+    }
+
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 30px; /* Vertical align middle of the 60px circle */
+      left: 10%;
+      right: 10%;
+      height: 0;
+      border-top: 2px dotted var(--accent);
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .step-item {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-secondary);
+      padding: 0 0.5rem;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      color: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .step-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 240px;
+    }
+
+    /* -------------------------------------------------------------
+       7. TESTIMONIALS
+       ------------------------------------------------------------- */
+    .testimonials {
+      background-color: var(--bg-primary);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent);
+      padding: 2.25rem 2rem;
+      border-radius: 0 6px 6px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quote-icon {
+      color: var(--accent);
+      opacity: 0.2;
+      margin-bottom: 1rem;
+      display: flex;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rating {
+      display: flex;
+      gap: 2px;
+    }
+
+    .rating svg {
+      fill: var(--warning);
+      color: var(--warning);
+    }
+
+    .student-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .student-name {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+    }
+
+    .student-city {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    /* -------------------------------------------------------------
+       8. FREE RESOURCES
+       ------------------------------------------------------------- */
+    .resources-section {
+      background-color: var(--bg-secondary);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .resource-card {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumbnail-wrapper {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .resource-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .resource-type {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .resource-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .resource-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: auto;
+    }
+
+    .resource-link:hover {
+      color: var(--accent);
+    }
+
+    .resources-cta-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* -------------------------------------------------------------
+       9. CONTACT SECTION
+       ------------------------------------------------------------- */
+    .contact-section {
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+    }
+
+    /* Form Styles */
+    .contact-form-card {
+      background-color: var(--bg-primary);
+    }
+
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      outline: none;
+      transition: border-color var(--transition-speed);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .form-control:focus {
+      border-color: var(--accent);
+    }
+
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+      padding-right: 2.5rem;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Contact Info Panel */
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 2.5rem;
+    }
+
+    .info-intro {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-method-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      transition: border-color var(--transition-speed);
+    }
+
+    .contact-method-card:hover {
+      border-color: var(--accent);
+    }
+
+    .method-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .method-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .method-title {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .method-link {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 0.15rem;
+    }
+
+    /* -------------------------------------------------------------
+       10. FOOTER SECTION
+       ------------------------------------------------------------- */
+    .footer-section {
+      background-color: var(--bg-dark);
+      color: var(--bg-primary);
+      padding: 5rem 1.5rem 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 0.8fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col-about {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-col-about .logo {
+      color: var(--bg-primary);
+    }
+
+    .footer-tagline {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      max-width: 320px;
+    }
+
+    .footer-col-title {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      color: var(--bg-primary);
+    }
+
+    .footer-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      list-style: none;
+    }
+
+    .footer-links-grid a {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links-grid a:hover {
+      color: var(--accent);
+    }
+
+    .footer-col-social {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: var(--bg-dark-surface);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-speed);
+    }
+
+    .social-icon-btn:hover {
+      background-color: var(--accent);
+      color: var(--bg-primary);
+      border-color: var(--accent);
+    }
+
+    /* Footer Bottom */
+    .footer-bottom {
+      border-top: 1px solid var(--border-dark);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .footer-disclaimer {
+      font-size: 0.75rem;
+      color: #666666;
+      line-height: 1.6;
+    }
+
+    /* -------------------------------------------------------------
+       MODAL & OVERLAYS
+       ------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-card {
+      background-color: var(--bg-primary);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 440px;
+      padding: 3rem 2.25rem;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-success-icon {
+      color: var(--success);
+      margin-bottom: 1.5rem;
+      display: inline-flex;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .modal-text {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------
+       STICKY / FLOATING ELEMENTS
+       ------------------------------------------------------------- */
+    /* Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #25d366;
+      color: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      z-index: 999;
+      transition: transform var(--transition-speed);
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+    }
+
+    /* Mobile Sticky Bottom Bar */
+    .mobile-sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      padding: 0.75rem 1.5rem;
+      z-index: 998;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.04);
+    }
+
+    /* -------------------------------------------------------------
+       RESPONSIVE DESIGN (MOBILE-FIRST)
+       ------------------------------------------------------------- */
+    
+    /* Small/Medium screens (Tablet & Mobile default) */
+    @media (max-width: 1024px) {
+      h1 {
+        font-size: 2.75rem;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .hero-text {
+        text-align: center;
+      }
+      .hero-text .subtext {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .chart-container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .about-content {
+        text-align: center;
+      }
+      .highlight-box {
+        padding: 0.75rem;
+      }
+      .about-content .btn {
+        margin: 0 auto;
+      }
+      .individual-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .combo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 768px;
+      }
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+      .footer-col-social {
+        grid-column: span 2;
+        align-items: flex-start;
+      }
+    }
+
+    /* Small Screens (Mobile landscape/portrait) */
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 1rem;
+      }
+      h1 {
+        font-size: 2.25rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+      
+      /* Toggle Nav Links Container */
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+        padding: 2rem;
+        gap: 1.5rem;
+        align-items: flex-start;
+        z-index: 999;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links li {
+        width: 100%;
+      }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0;
+        font-size: 1.0625rem;
+      }
+
+      .nav-links .btn {
+        width: 100%;
+        margin-top: 1rem;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        text-align: left;
+      }
+
+      .individual-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .combo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2x2 on mobile */
+        gap: 1rem;
+      }
+
+      .why-card {
+        padding: 1.5rem 1.25rem;
+      }
+
+      /* How it works mobile styling */
+      .steps-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .steps-container::before {
+        left: 30px;
+        top: 30px;
+        bottom: 30px;
+        width: 0;
+        height: auto;
+        border-left: 2px dotted var(--accent);
+        border-top: none;
+      }
+
+      .step-item {
+        flex-direction: row;
+        text-align: left;
+        width: 100%;
+        gap: 1.5rem;
+        align-items: flex-start;
+        background: transparent;
+        padding: 0;
+      }
+
+      .step-number {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      .step-desc {
+        max-width: 100%;
+      }
+
+      /* Testimonials Horizontal Scroll */
+      .testimonials-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 1.5rem;
+        padding: 0.5rem 0 1.5rem 0;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+      }
+
+      .testimonials-grid::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+
+      .testimonial-card {
+        flex: 0 0 85%;
+        scroll-snap-align: start;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .form-group-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .footer-col-social {
+        grid-column: span 1;
+      }
+
+      .footer-bar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        text-align: center;
+      }
+
+      /* Sticky elements */
+      .whatsapp-float {
+        bottom: 5.5rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+      }
+
+      .mobile-sticky-bar {
+        display: block;
+      }
+
+      body {
+        padding-bottom: 60px; /* offset for mobile sticky bar */
+      }
+    }
+
+    /* Floating WhatsApp Widget Styling */
+    .whatsapp-widget {
+      position: fixed;
+      bottom: 6.5rem;
+      right: 2rem;
+      width: 320px;
+      background-color: var(--bg-primary);
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-color);
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: widgetSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes widgetSlideUp {
+      from { transform: translateY(15px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .whatsapp-widget-header {
+      background-color: #075e54; /* Official WhatsApp dark green */
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .whatsapp-widget-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .whatsapp-profile-pic {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #128c7e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .whatsapp-profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .whatsapp-profile-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    .whatsapp-profile-status {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .whatsapp-widget-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .whatsapp-widget-body {
+      background-color: #e5ddd5; /* Classic WhatsApp chat bg */
+      padding: 1rem;
+      height: 140px;
+      overflow-y: auto;
+    }
+
+    .whatsapp-message {
+      background-color: white;
+      padding: 0.75rem;
+      border-radius: 0 8px 8px 8px;
+      max-width: 85%;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .whatsapp-message-sender {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #075e54;
+    }
+
+    .whatsapp-message-text {
+      font-size: 0.8125rem;
+      color: #303030;
+      line-height: 1.4;
+    }
+
+    .whatsapp-message-time {
+      font-size: 0.625rem;
+      color: #999;
+      align-self: flex-end;
+    }
+
+    .whatsapp-widget-footer {
+      padding: 0.75rem 1rem;
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: center;
+    }
+
+    .whatsapp-widget-btn {
+      background-color: #25d366;
+      color: white;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 20px;
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+      text-decoration: none;
+    }
+
+    .whatsapp-widget-btn:hover {
+      background-color: #20ba5a;
+    }
+
+    @media (max-width: 768px) {
+      .whatsapp-widget {
+        bottom: 9rem;
+        right: 1rem;
+        width: 290px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ---------------------------------------------------------------
+       1. NAVBAR SECTION
+       --------------------------------------------------------------- -->
+  <header class="header-nav" id="headerNav">
+    <div class="nav-container">
+      <a href="#home" class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+          <line x1="6" y1="2" x2="6" y2="22"></line>
+          <line x1="18" y1="2" x2="18" y2="22"></line>
+          <rect x="3" y="6" width="6" height="10" rx="1" fill="currentColor"></rect>
+          <rect x="15" y="8" width="6" height="8" rx="1" fill="none"></rect>
+        </svg>
+        <span>TradeAcademy</span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu" onclick="toggleMobileMenu()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12" id="lineMid"></line>
+          <line x1="3" y1="6" x2="21" y2="6" id="lineTop"></line>
+          <line x1="3" y1="18" x2="21" y2="18" id="lineBot"></line>
+        </svg>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="#courses" onclick="closeMobileMenu()">Courses</a></li>
+        <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+        <li><a href="#resources" onclick="closeMobileMenu()">Free Resources</a></li>
+        <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+        <li><a href="#courses" class="btn btn-primary" style="color: white; padding: 0.5rem 1.25rem;" onclick="closeMobileMenu()">Start Learning</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ---------------------------------------------------------------
+       2. HERO SECTION
+       --------------------------------------------------------------- -->
+  <section class="hero-section" id="home">
+    <div class="container hero-grid">
+      <div class="hero-text reveal">
+        <span class="badge">FOREX & General Trading Education</span>
+        <h1>Master the Markets. Trade with Confidence.</h1>
+        <p class="subtext">Learn proven FOREX and general trading strategies from experienced traders. Simple, logical, practical — for beginners to advanced.</p>
+        
+        <div class="hero-actions">
+          <a href="#courses" class="btn btn-primary">Explore Courses</a>
+          <a href="#resources" class="btn btn-outline">Watch Free Lesson</a>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-item">
+            <span class="stat-number" data-target="38000" data-suffix="+">0</span>
+            <span class="stat-label">Community Members</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="10" data-suffix="+">0</span>
+            <span class="stat-label">Courses Available</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="5" data-suffix="+">0</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="95" data-suffix="%">0</span>
+            <span class="stat-label">Student Satisfaction</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-chart reveal">
+        <div class="chart-container">
+          <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="trading-chart-svg">
+            <!-- Grid Lines -->
+            <path d="M 40 40 H 560 M 40 90 H 560 M 40 140 H 560 M 40 190 H 560 M 40 240 H 560 M 40 290 H 560 M 40 340 H 560" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
+            <path d="M 110 40 V 340 M 180 40 V 340 M 250 40 V 340 M 320 40 V 340 M 390 40 V 340 M 460 40 V 340 M 530 40 V 340" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
+            
+            <!-- Axis Borders -->
+            <line x1="40" y1="40" x2="40" y2="340" stroke="#374151" stroke-width="1.5"/>
+            <line x1="40" y1="340" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
+            <line x1="560" y1="40" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
+            
+            <!-- Y-Axis Labels (Right Side) -->
+            <text x="568" y="44" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1400</text>
+            <text x="568" y="94" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1360</text>
+            <text x="568" y="144" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1320</text>
+            <text x="568" y="194" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1280</text>
+            <text x="568" y="244" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1240</text>
+            <text x="568" y="294" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1200</text>
+            <text x="568" y="344" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1160</text>
+            
+            <!-- X-Axis Labels (Bottom Side) -->
+            <text x="100" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">09:00</text>
+            <text x="170" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">10:00</text>
+            <text x="240" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">11:00</text>
+            <text x="310" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">12:00</text>
+            <text x="380" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">13:00</text>
+            <text x="450" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">14:00</text>
+            <text x="520" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">15:00</text>
+
+            <!-- Volume Bars (at bottom) -->
+            <!-- V1 Green -->
+            <rect x="63" y="325" width="14" height="15" fill="#10b981" opacity="0.3"/>
+            <!-- V2 Red -->
+            <rect x="103" y="330" width="14" height="10" fill="#ef4444" opacity="0.3"/>
+            <!-- V3 Green -->
+            <rect x="143" y="315" width="14" height="25" fill="#10b981" opacity="0.3"/>
+            <!-- V4 Red -->
+            <rect x="183" y="328" width="14" height="12" fill="#ef4444" opacity="0.3"/>
+            <!-- V5 Green -->
+            <rect x="223" y="310" width="14" height="30" fill="#10b981" opacity="0.3"/>
+            <!-- V6 Green -->
+            <rect x="263" y="305" width="14" height="35" fill="#10b981" opacity="0.3"/>
+            <!-- V7 Red -->
+            <rect x="303" y="320" width="14" height="20" fill="#ef4444" opacity="0.3"/>
+            <!-- V8 Green -->
+            <rect x="343" y="312" width="14" height="28" fill="#10b981" opacity="0.3"/>
+            <!-- V9 Green -->
+            <rect x="383" y="300" width="14" height="40" fill="#10b981" opacity="0.3"/>
+            <!-- V10 Red -->
+            <rect x="423" y="302" width="14" height="38" fill="#ef4444" opacity="0.3"/>
+            <!-- V11 Green -->
+            <rect x="463" y="318" width="14" height="22" fill="#10b981" opacity="0.3"/>
+            <!-- V12 Green -->
+            <rect x="503" y="304" width="14" height="36" fill="#10b981" opacity="0.3"/>
+
+            <!-- Candlesticks (Wick line + Body rect) -->
+            <!-- C1 Green: Open 1.1240(y280) Close 1.1260(y250) Wick 1.1230-1.1270 -->
+            <line x1="70" y1="235" x2="70" y2="295" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="63" y="250" width="14" height="30" fill="#10b981"/>
+            
+            <!-- C2 Red: Open 1.1260(y250) Close 1.1250(y265) Wick 1.1245-1.1265 -->
+            <line x1="110" y1="242.5" x2="110" y2="272.5" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="103" y="250" width="14" height="15" fill="#ef4444"/>
+
+            <!-- C3 Green: Open 1.1250(y265) Close 1.1290(y205) Wick 1.1240-1.1300 -->
+            <line x1="150" y1="190" x2="150" y2="280" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="143" y="205" width="14" height="60" fill="#10b981"/>
+
+            <!-- C4 Red: Open 1.1290(y205) Close 1.1280(y220) Wick 1.1275-1.1295 -->
+            <line x1="190" y1="197.5" x2="190" y2="227.5" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="183" y="205" width="14" height="15" fill="#ef4444"/>
+
+            <!-- C5 Green: Open 1.1280(y220) Close 1.1320(y160) Wick 1.1270-1.1330 -->
+            <line x1="230" y1="145" x2="230" y2="235" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="223" y="160" width="14" height="60" fill="#10b981"/>
+
+            <!-- C6 Green: Open 1.1320(y160) Close 1.1340(y130) Wick 1.1310-1.1350 -->
+            <line x1="270" y1="115" x2="270" y2="175" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="263" y="130" width="14" height="30" fill="#10b981"/>
+
+            <!-- C7 Red: Open 1.1340(y130) Close 1.1325(y152.5) Wick 1.1315-1.1345 -->
+            <line x1="310" y1="122.5" x2="310" y2="167.5" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="303" y="130" width="14" height="22.5" fill="#ef4444"/>
+
+            <!-- C8 Green: Open 1.1325(y152.5) Close 1.1360(y100) Wick 1.1315-1.1370 -->
+            <line x1="350" y1="90" x2="350" y2="167.5" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="343" y="100" width="14" height="52.5" fill="#10b981"/>
+
+            <!-- C9 Green: Open 1.1360(y100) Close 1.1375(y77.5) Wick 1.1350-1.1385 -->
+            <line x1="390" y1="62.5" x2="390" y2="115" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="383" y="77.5" width="14" height="22.5" fill="#10b981"/>
+
+            <!-- C10 Red: Open 1.1375(y77.5) Close 1.1350(y115) Wick 1.1340-1.1380 -->
+            <line x1="430" y1="70" x2="430" y2="130" stroke="#ef4444" stroke-width="1.5"/>
+            <rect x="423" y="77.5" width="14" height="37.5" fill="#ef4444"/>
+
+            <!-- C11 Green: Open 1.1350(y115) Close 1.1365(y92.5) Wick 1.1335-1.1370 -->
+            <line x1="470" y1="100" x2="470" y2="137.5" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="463" y="92.5" width="14" height="22.5" fill="#10b981"/>
+
+            <!-- C12 Green: Open 1.1365(y92.5) Close 1.1390(y55) Wick 1.1355-1.1395 -->
+            <line x1="510" y1="47.5" x2="510" y2="107.5" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="503" y="55" width="14" height="37.5" fill="#10b981"/>
+
+            <!-- Moving Average Lines -->
+            <!-- MA 1 (Fast - Blue) -->
+            <polyline points="70,270 110,258 150,240 190,215 230,192 270,155 310,142 350,126 390,95 430,98 470,102 510,75" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+            
+            <!-- MA 2 (Slow - Orange) -->
+            <polyline points="70,310 110,298 150,280 190,260 230,240 270,218 310,198 350,180 390,160 430,148 470,138 510,120" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+
+            <!-- HUD Overlay Target (Active Price point on Candle 9 peak) -->
+            <g>
+              <!-- Dotted Crosshairs -->
+              <line x1="390" y1="40" x2="390" y2="340" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+              <line x1="40" y1="100" x2="560" y2="100" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+              
+              <!-- Target Point Glow -->
+              <circle cx="390" cy="100" r="7" fill="#3b82f6" opacity="0.4"/>
+              <circle cx="390" cy="100" r="3" fill="#3b82f6"/>
+              
+              <!-- Y-axis Badge -->
+              <rect x="560" y="90" width="36" height="20" rx="2" fill="#3b82f6"/>
+              <text x="564" y="103" fill="#ffffff" font-family="Inter" font-size="8" font-weight="700">1.1360</text>
+              
+              <!-- Tooltip Box (Floating Fintech Style Card) -->
+              <rect x="270" y="45" width="110" height="42" rx="4" fill="#121824" stroke="#3b82f6" stroke-width="1"/>
+              <text x="278" y="58" fill="#3b82f6" font-family="Inter" font-size="8" font-weight="700">BUY SIGNAL</text>
+              <text x="278" y="70" fill="#ffffff" font-family="Inter" font-size="9" font-weight="600">Price: 1.1360</text>
+              <text x="278" y="80" fill="#9ca3af" font-family="Inter" font-size="8" font-weight="400">Vol: 12.4K (MA Cross)</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       3. ABOUT SECTION
+       --------------------------------------------------------------- -->
+  <section class="about-section" id="about">
+    <div class="container about-grid">
+      <div class="about-avatar-wrapper reveal">
+        <svg width="220" height="220" viewBox="0 0 200 200" style="display: block;">
+          <circle cx="100" cy="100" r="95" fill="#0a0a0a" stroke="#3b82f6" stroke-width="2.5"/>
+          <circle cx="100" cy="80" r="32" fill="#3b82f6" opacity="0.85"/>
+          <path d="M42 158 C42 122, 158 122, 158 158" fill="#3b82f6" opacity="0.6"/>
+          <path d="M60 178 C60 150, 140 150, 140 178" fill="#3b82f6"/>
+          <circle cx="100" cy="100" r="86" fill="none" stroke="#3b82f6" stroke-width="0.75" stroke-dasharray="4 6" opacity="0.5"/>
+          <!-- Grid line markers to give it a hud interface look -->
+          <line x1="100" y1="5" x2="100" y2="15" stroke="#3b82f6" stroke-width="1.5"/>
+          <line x1="100" y1="185" x2="100" y2="195" stroke="#3b82f6" stroke-width="1.5"/>
+          <line x1="5" y1="100" x2="15" y2="100" stroke="#3b82f6" stroke-width="1.5"/>
+          <line x1="185" y1="100" x2="195" y2="100" stroke="#3b82f6" stroke-width="1.5"/>
+        </svg>
+      </div>
+      
+      <div class="about-content reveal">
+        <span class="badge">Our Story</span>
+        <h3>Built by Traders, for Traders</h3>
+        <p class="story-p">Our head instructor spent years working in corporate finance before discovering the power of independent trading. After mastering FOREX and general market strategies over a decade, the mission became clear — to simplify trading education for everyday people. Today, with a community of 38,000+ active traders and students across India, our platform delivers practical, no-nonsense trading knowledge that works in real market conditions.</p>
+        
+        <div class="about-highlights">
+          <div class="highlight-box">
+            <span class="highlight-title">10+ Years</span>
+            <span class="highlight-sub">Trading Markets</span>
+          </div>
+          <div class="highlight-box">
+            <span class="highlight-title">38K+</span>
+            <span class="highlight-sub">Community Members</span>
+          </div>
+          <div class="highlight-box">
+            <span class="highlight-title">Simple</span>
+            <span class="highlight-sub">& Practical Rules</span>
+          </div>
+        </div>
+        
+        <a href="#contact" class="btn btn-outline">Learn More About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       4. COURSES SECTION
+       --------------------------------------------------------------- -->
+  <section class="courses-section" id="courses">
+    <div class="container">
+      <h2>Our Courses</h2>
+      <p class="courses-subtitle">Choose from individual courses or save more with combo packs</p>
+      
+      <div class="tabs-nav reveal">
+        <button class="tab-btn active" onclick="switchTab('individual')">Individual Courses</button>
+        <button class="tab-btn" onclick="switchTab('combos')">Combo Packs</button>
+      </div>
+
+      <!-- Tab 1: Individual Courses -->
+      <div class="tab-pane active reveal" id="individualPane">
+        <div class="individual-grid">
+          
+          <!-- Card 1: FOREX Fundamentals -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #3b82f6;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">FOREX Fundamentals</h4>
+              <p class="course-desc">Master the basics of currency pairs, pips, lots, and market structure.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.4,999</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Card 2: FOREX Price Action Mastery -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #1d4ed8;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <line x1="6" y1="2" x2="6" y2="22"></line>
+                <line x1="18" y1="2" x2="18" y2="22"></line>
+                <rect x="3" y="6" width="6" height="10" rx="1" fill="currentColor"></rect>
+                <rect x="15" y="8" width="6" height="8" rx="1" fill="none"></rect>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">FOREX Price Action Mastery</h4>
+              <p class="course-desc">Trade without indicators using pure price action and candlestick patterns.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.6,999</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Card 3: FOREX Scalping Strategies -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #2563eb;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+                <path d="M12 2 L12 4 M19 5 L20 4 M4 4 L5 5"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">FOREX Scalping Strategies</h4>
+              <p class="course-desc">Execute fast, precise trades using proven 1-minute and 5-minute setups.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.5,999</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Card 4: Day Trading Strategies -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #1e40af;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                <polyline points="16 7 22 7 22 13"></polyline>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">Day Trading Strategies</h4>
+              <p class="course-desc">Capture intraday moves in stocks and indices with high-probability setups.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.6,500</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Card 5: Swing Trading Masterclass -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #1e3a8a;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <path d="M2 18c3-4 5-12 10-12s7 8 10 12"></path>
+                <circle cx="12" cy="6" r="2" fill="currentColor"></circle>
+                <circle cx="2" cy="18" r="2" fill="currentColor"></circle>
+                <circle cx="22" cy="18" r="2" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">Swing Trading Masterclass</h4>
+              <p class="course-desc">Hold trades for days and ride large market moves using smart money concepts.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.7,499</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Card 6: Options Trading for Beginners -->
+          <div class="course-card">
+            <div class="course-banner" style="background-color: #3b82f6;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">Options Trading for Beginners</h4>
+              <p class="course-desc">Understand options buying, selling, Greeks, and practical strategies.</p>
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="course-price">Rs.5,500</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab 2: Combo Packs -->
+      <div class="tab-pane reveal" id="combosPane">
+        <div class="combo-grid">
+          
+          <!-- Combo 1: FOREX Complete Pack -->
+          <div class="course-card combo-card">
+            <span class="combo-badge">COMBO</span>
+            <div class="course-banner" style="background-color: #3b82f6;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">FOREX Complete Pack</h4>
+              <span class="combo-tag">60 days access</span>
+              
+              <div class="combo-includes">
+                <div class="combo-includes-title">Courses Included:</div>
+                <ul class="combo-includes-list">
+                  <li>FOREX Fundamentals</li>
+                  <li>FOREX Price Action Mastery</li>
+                </ul>
+              </div>
+
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="price-original">Rs.11,998</span>
+                <span class="price-discounted">Rs.9,999</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Combo 2: Day & Swing Combo -->
+          <div class="course-card combo-card">
+            <span class="combo-badge">COMBO</span>
+            <div class="course-banner" style="background-color: #1d4ed8;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">Day & Swing Combo</h4>
+              <span class="combo-tag">60 days access</span>
+              
+              <div class="combo-includes">
+                <div class="combo-includes-title">Courses Included:</div>
+                <ul class="combo-includes-list">
+                  <li>Day Trading Strategies</li>
+                  <li>Swing Trading Masterclass</li>
+                </ul>
+              </div>
+
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="price-original">Rs.13,999</span>
+                <span class="price-discounted">Rs.11,499</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+          <!-- Combo 3: Ultimate Trader Pack -->
+          <div class="course-card combo-card">
+            <span class="combo-badge">COMBO</span>
+            <div class="course-banner" style="background-color: #1e3a8a;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="course-icon-svg">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div class="course-body">
+              <h4 class="course-title">Ultimate Trader Pack</h4>
+              <span class="combo-tag">60 days access</span>
+              
+              <div class="combo-includes">
+                <div class="combo-includes-title">Courses Included:</div>
+                <ul class="combo-includes-list">
+                  <li>FOREX Scalping Strategies</li>
+                  <li>Options Trading for Beginners</li>
+                </ul>
+              </div>
+
+              <div class="course-price-row">
+                <span class="course-price-label">Price</span>
+                <span class="price-original">Rs.11,499</span>
+                <span class="price-discounted">Rs.9,499</span>
+              </div>
+              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       5. WHY CHOOSE US SECTION
+       --------------------------------------------------------------- -->
+  <section class="why-choose-us">
+    <div class="container">
+      <h2 style="color: white;">Why Students Choose Us</h2>
+      
+      <div class="why-grid reveal">
+        
+        <!-- Card 1 -->
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+              <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+              <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+            </svg>
+          </div>
+          <h4 class="why-card-title">Simple & Logical</h4>
+          <p class="why-card-desc">No jargon. No fluff. Just clear, practical strategies you can apply immediately.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <h4 class="why-card-title">Real Market Examples</h4>
+          <p class="why-card-desc">Every concept taught with live chart examples from actual market conditions.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 20h18"></path>
+              <path d="M3 16h4v4H3z"></path>
+              <path d="M7 12h4v8H7z"></path>
+              <path d="M11 8h4v12h-4z"></path>
+              <path d="M15 4h4v16h-4z"></path>
+            </svg>
+          </div>
+          <h4 class="why-card-title">Beginner to Advanced</h4>
+          <p class="why-card-desc">Structured learning path from complete beginner to confident trader.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h4 class="why-card-title">Community Support</h4>
+          <p class="why-card-desc">Join 38,000+ traders in our active community for daily insights and support.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       6. HOW IT WORKS SECTION
+       --------------------------------------------------------------- -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      
+      <div class="steps-container reveal">
+        
+        <!-- Step 1 -->
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <h4 class="step-title">Choose Your Course</h4>
+          <p class="step-desc">Browse our individual courses or combo packs and pick what suits your goals</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <h4 class="step-title">Enroll & Pay</h4>
+          <p class="step-desc">Complete secure payment via UPI, card, or net banking</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <h4 class="step-title">Get Instant Access</h4>
+          <p class="step-desc">Receive login credentials on your email immediately after payment</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <h4 class="step-title">Start Trading</h4>
+          <p class="step-desc">Watch lessons, apply strategies, and trade with confidence</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       7. TESTIMONIALS SECTION
+       --------------------------------------------------------------- -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>What Our Students Say</h2>
+      
+      <div class="testimonials-grid reveal">
+        
+        <!-- Card 1 -->
+        <div class="testimonial-card">
+          <div class="quote-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.192 15.757c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L4.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22H4v7.96h7.192v-5zm12.008 0c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L16.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22h-3.79v7.96H23.2v-5z"/>
+            </svg>
+          </div>
+          <p class="testimonial-text">"I knew nothing about currency trading when I started. The Forex Fundamentals course made everything so simple to understand. I've just closed my first profitable month, making back my course fee twice over! Highly recommended for beginners."</p>
+          <div class="testimonial-footer">
+            <div class="rating">
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+            </div>
+            <div class="student-info">
+              <span class="student-name">Rajat S.</span>
+              <span class="student-city">Mumbai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="testimonial-card">
+          <div class="quote-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.192 15.757c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L4.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22H4v7.96h7.192v-5zm12.008 0c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L16.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22h-3.79v7.96H23.2v-5z"/>
+            </svg>
+          </div>
+          <p class="testimonial-text">"I wasted thousands on indicators that never worked. The Price Action Mastery course completely changed my approach. Trading clean charts without clutter is the best decision I've made. My strike rate has improved drastically."</p>
+          <div class="testimonial-footer">
+            <div class="rating">
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+            </div>
+            <div class="student-info">
+              <span class="student-name">Priya K.</span>
+              <span class="student-city">Bengaluru</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="testimonial-card">
+          <div class="quote-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.192 15.757c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L4.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22H4v7.96h7.192v-5zm12.008 0c0-.954-.083-1.916-.25-2.886-.167-.97-.45-1.92-.85-2.85a9.58 9.58 0 0 0-1.57-2.61c-.65-.77-1.42-1.46-2.31-2.07L16.5 7.15c.67.42 1.25.92 1.74 1.5.49.58.87 1.22 1.14 1.92.27.7.41 1.44.41 2.22h-3.79v7.96H23.2v-5z"/>
+            </svg>
+          </div>
+          <p class="testimonial-text">"The lessons are excellent, but the Telegram community is where the real value is. Seeing the daily trade setups and getting feedback on my analysis from other students is like having a mentor on call 24/7."</p>
+          <div class="testimonial-footer">
+            <div class="rating">
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+            </div>
+            <div class="student-info">
+              <span class="student-name">Amit Verma</span>
+              <span class="student-city">Delhi</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       8. FREE RESOURCES SECTION
+       --------------------------------------------------------------- -->
+  <section class="resources-section" id="resources">
+    <div class="container">
+      <h2>Free Resources</h2>
+      <p class="courses-subtitle">Start learning before you enroll</p>
+      
+      <div class="resources-grid reveal">
+        
+        <!-- Card 1 (Video) -->
+        <div class="resource-card">
+          <div class="thumbnail-wrapper">
+            <svg viewBox="0 0 200 120" width="100%" height="100%" fill="none" style="display:block;">
+              <rect width="200" height="120" rx="6" fill="#0a0a0a"/>
+              <!-- Tech Grid Pattern -->
+              <path d="M 20,0 V 120 M 40,0 V 120 M 60,0 V 120 M 80,0 V 120 M 100,0 V 120 M 120,0 V 120 M 140,0 V 120 M 160,0 V 120 M 180,0 V 120" stroke="#1c1c1c" stroke-width="0.5"/>
+              <path d="M 0,20 H 200 M 0,40 H 200 M 0,60 H 200 M 0,80 H 200 M 0,100 H 200" stroke="#1c1c1c" stroke-width="0.5"/>
+              <!-- Play Button Glow -->
+              <circle cx="100" cy="60" r="24" fill="#3b82f6"/>
+              <polygon points="94,50 112,60 94,70" fill="#ffffff"/>
+            </svg>
+          </div>
+          <div class="resource-body">
+            <span class="resource-type">Video Lesson</span>
+            <h4 class="resource-title">What is FOREX? A Beginner's Complete Guide</h4>
+            <a href="#contact" class="resource-link">
+              <span>Watch Now</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2 (Article) -->
+        <div class="resource-card">
+          <div class="thumbnail-wrapper">
+            <svg viewBox="0 0 200 120" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;">
+              <rect width="200" height="120" rx="6" fill="#f3f4f6" stroke="none"/>
+              <line x1="20" y1="90" x2="180" y2="90" stroke="#d1d5db" stroke-dasharray="3 3"/>
+              
+              <!-- Red Bearish Candle -->
+              <line x1="45" y1="20" x2="45" y2="100" stroke="#ef4444" stroke-width="1.5"/>
+              <rect x="37" y="40" width="16" height="40" rx="1" fill="#ef4444" stroke="none"/>
+              
+              <!-- Green Bullish Candle -->
+              <line x1="95" y1="10" x2="95" y2="90" stroke="#10b981" stroke-width="1.5"/>
+              <rect x="87" y="30" width="16" height="40" rx="1" fill="#10b981" stroke="none"/>
+              
+              <!-- Green Bullish Candle 2 -->
+              <line x1="145" y1="20" x2="145" y2="105" stroke="#10b981" stroke-width="1.5"/>
+              <rect x="137" y="45" width="16" height="40" rx="1" fill="#10b981" stroke="none"/>
+            </svg>
+          </div>
+          <div class="resource-body">
+            <span class="resource-type">Article</span>
+            <h4 class="resource-title">5 Price Action Patterns Every Trader Must Know</h4>
+            <a href="#contact" class="resource-link">
+              <span>Read Article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3 (Article) -->
+        <div class="resource-card">
+          <div class="thumbnail-wrapper">
+            <svg viewBox="0 0 200 120" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;">
+              <rect width="200" height="120" rx="6" fill="#f3f4f6" stroke="none"/>
+              <!-- Shield icon representing Risk Management -->
+              <path d="M100 25 L135 37 V65 C135 85 100 97 100 97 C100 97 65 85 65 65 V37 Z" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="2"/>
+              <!-- Checkmark inside shield -->
+              <path d="M90 60 L97 67 L112 52" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="resource-body">
+            <span class="resource-type">Article</span>
+            <h4 class="resource-title">How to Manage Risk in Day Trading</h4>
+            <a href="#contact" class="resource-link">
+              <span>Read Article</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="resources-cta-wrapper reveal">
+        <a href="#contact" class="btn btn-outline-blue">View All Free Content</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       9. CONTACT SECTION
+       --------------------------------------------------------------- -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <h2>Get in Touch</h2>
+      
+      <div class="contact-grid reveal">
+        
+        <!-- Contact Form -->
+        <div class="contact-form-card">
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" class="form-control" required placeholder="e.g. John Doe">
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" required placeholder="e.g. john@example.com">
+              </div>
+            </div>
+            
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" required placeholder="e.g. +91 98765 43210">
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <select id="subject" class="form-control" required>
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="course_enquiry">Course Enquiry</option>
+                  <option value="payment_issue">Payment Issue</option>
+                  <option value="general_question">General Question</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" class="form-control" required placeholder="How can we help you?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" style="padding: 0.9rem;">Submit Enquiry</button>
+          </form>
+        </div>
+
+        <!-- Contact Info panel -->
+        <div class="contact-info-panel">
+          <p class="info-intro">Have questions about our course syllabus, timings, or payments? Contact us directly and our team will assist you within 24 hours.</p>
+          
+          <div class="contact-methods">
+            
+            <!-- Method 1: WhatsApp -->
+            <a href="#" class="contact-method-card">
+              <div class="method-icon">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                </svg>
+              </div>
+              <div class="method-details">
+                <span class="method-title">WhatsApp Support</span>
+                <span class="method-link">Chat with us on WhatsApp</span>
+              </div>
+            </a>
+
+            <!-- Method 2: Email -->
+            <a href="mailto:support@tradeacademy.com" class="contact-method-card">
+              <div class="method-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="method-details">
+                <span class="method-title">Email Address</span>
+                <span class="method-link">support@tradeacademy.com</span>
+              </div>
+            </a>
+
+            <!-- Method 3: Telegram -->
+            <a href="#" class="contact-method-card">
+              <div class="method-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.6 1.5-1.55 2.76-2.93 2.76-2.95 0-.03-.01-.15-.08-.21-.07-.06-.18-.04-.26-.02-.11.02-1.87 1.18-5.27 3.47-.5.34-.95.5-1.35.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.37-.38-1.32-.8.03-.22.33-.45.89-.7 3.48-1.51 5.8-2.52 6.96-3.01 3.32-1.4 4.02-1.64 4.47-1.64.1 0 .32.02.46.14.12.1.15.24.17.34-.01.07-.01.21-.02.35z"/>
+                </svg>
+              </div>
+              <div class="method-details">
+                <span class="method-title">Free Channel</span>
+                <span class="method-link">Join our Free Telegram Community</span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------
+       10. FOOTER SECTION
+       --------------------------------------------------------------- -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Col 1: About & Logo -->
+        <div class="footer-col-about">
+          <a href="#home" class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+              <line x1="6" y1="2" x2="6" y2="22"></line>
+              <line x1="18" y1="2" x2="18" y2="22"></line>
+              <rect x="3" y="6" width="6" height="10" rx="1" fill="currentColor"></rect>
+              <rect x="15" y="8" width="6" height="8" rx="1" fill="none"></rect>
+            </svg>
+            <span>TradeAcademy</span>
+          </a>
+          <p class="footer-tagline">Simple. Logical. Practical.</p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-grid">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#resources">Free Resources</a></li>
+            <li><a href="#courses">Refund Policy</a></li>
+            <li><a href="#courses">Privacy Policy</a></li>
+            <li><a href="#courses">Terms & Conditions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Social Links -->
+        <div class="footer-col-social">
+          <h4 class="footer-col-title">Follow Us</h4>
+          <div class="social-row">
+            <!-- YouTube -->
+            <a href="#" class="social-icon-btn" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social-icon-btn" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <!-- Telegram -->
+            <a href="#" class="social-icon-btn" aria-label="Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.6 1.5-1.55 2.76-2.93 2.76-2.95 0-.03-.01-.15-.08-.21-.07-.06-.18-.04-.26-.02-.11.02-1.87 1.18-5.27 3.47-.5.34-.95.5-1.35.49-.44-.01-1.28-.25-1.9-.45-.77-.25-1.37-.38-1.32-.8.03-.22.33-.45.89-.7 3.48-1.51 5.8-2.52 6.96-3.01 3.32-1.4 4.02-1.64 4.47-1.64.1 0 .32.02.46.14.12.1.15.24.17.34-.01.07-.01.21-.02.35z"/>
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a href="#" class="social-icon-btn" aria-label="WhatsApp" onclick="toggleWhatsAppWidget(event)">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-bar">
+          <span>&copy; 2025 TradeAcademy. All rights reserved. | For educational purposes only.</span>
+          <span>Designed with Precision</span>
+        </div>
+        <p class="footer-disclaimer">Disclaimer: Trading involves risk. Past performance is not indicative of future results. Our courses are for educational purposes only. We do not provide financial advice, signal services, or wealth management products.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ---------------------------------------------------------------
+       FLOATING & STICKY ELEMENTS
+       --------------------------------------------------------------- -->
+  <!-- Floating WhatsApp Button -->
+  <a href="#" class="whatsapp-float" aria-label="Chat with WhatsApp" onclick="toggleWhatsAppWidget(event)">
+    <svg width="30" height="30" viewBox="0 0 16 16" fill="white">
+      <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
+  </a>
+
+  <!-- Floating WhatsApp Widget -->
+  <div class="whatsapp-widget" id="whatsappWidget">
+    <div class="whatsapp-widget-header">
+      <div class="whatsapp-widget-profile">
+        <div class="whatsapp-profile-pic">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="white">
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+          </svg>
+        </div>
+        <div class="whatsapp-widget-profile">
+          <span class="whatsapp-profile-name" style="display: block; font-size: 0.875rem; font-weight: 700; color: white;">TradeAcademy Support</span>
+          <span class="whatsapp-profile-status" style="display: block; font-size: 0.6875rem; color: #a3e635; font-weight: 500;">Online</span>
+        </div>
+      </div>
+      <button class="whatsapp-widget-close" onclick="toggleWhatsAppWidget(event)">&times;</button>
+    </div>
+    <div class="whatsapp-widget-body">
+      <div class="whatsapp-message">
+        <span class="whatsapp-message-sender">Support Team</span>
+        <p class="whatsapp-message-text">Hi there! 👋 Welcome to TradeAcademy. How can we help you with our courses today?</p>
+        <span class="whatsapp-message-time" id="whatsappTime">12:30 PM</span>
+      </div>
+    </div>
+    <div class="whatsapp-widget-footer">
+      <a href="#" class="whatsapp-widget-btn" onclick="openWhatsAppChat(event)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="white" style="margin-right: 6px;">
+          <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+        </svg>
+        <span>Start Chat</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Bar -->
+  <div class="mobile-sticky-bar" id="mobileStickyBar">
+    <a href="#courses" class="btn btn-primary btn-full">Enroll Now</a>
+  </div>
+
+  <!-- ---------------------------------------------------------------
+       11. SUCCESS MODAL
+       --------------------------------------------------------------- -->
+  <div class="modal-backdrop" id="successModalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal-card">
+      <div class="modal-success-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12" stroke="var(--success)" stroke-width="2.5"></polyline>
+        </svg>
+      </div>
+      <h3 class="modal-title">Message Sent!</h3>
+      <p class="modal-text">We'll get back to you within 24 hours.</p>
+      <button class="btn btn-primary" onclick="closeSuccessModal()" style="min-width: 120px;">Close</button>
+    </div>
+  </div>
+
+  <!-- ---------------------------------------------------------------
+       JAVASCRIPT LOGIC
+       --------------------------------------------------------------- -->
+  <script>
+    // -------------------------------------------------------------
+    // MOBILE NAVIGATION MENU
+    // -------------------------------------------------------------
+    const navLinks = document.getElementById('navLinks');
+    const lineMid = document.getElementById('lineMid');
+    const lineTop = document.getElementById('lineTop');
+    const lineBot = document.getElementById('lineBot');
+
+    function toggleMobileMenu() {
+      navLinks.classList.toggle('active');
+      
+      // Animate hamburger lines
+      if (navLinks.classList.contains('active')) {
+        lineMid.style.opacity = '0';
+        lineTop.setAttribute('y1', '18');
+        lineTop.setAttribute('y2', '6');
+        lineBot.setAttribute('y1', '6');
+        lineBot.setAttribute('y2', '18');
+      } else {
+        lineMid.style.opacity = '1';
+        lineTop.setAttribute('y1', '6');
+        lineTop.setAttribute('y2', '6');
+        lineBot.setAttribute('y1', '18');
+        lineBot.setAttribute('y2', '18');
+      }
+    }
+
+    function closeMobileMenu() {
+      navLinks.classList.remove('active');
+      lineMid.style.opacity = '1';
+      lineTop.setAttribute('y1', '6');
+      lineTop.setAttribute('y2', '6');
+      lineBot.setAttribute('y1', '18');
+      lineBot.setAttribute('y2', '18');
+    }
+
+    // -------------------------------------------------------------
+    // NAVBAR SCROLL EFFECT
+    // -------------------------------------------------------------
+    const headerNav = document.getElementById('headerNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        headerNav.classList.add('scrolled');
+      } else {
+        headerNav.classList.remove('scrolled');
+      }
+    });
+
+    // -------------------------------------------------------------
+    // REVEAL ANIMATIONS (IntersectionObserver)
+    // -------------------------------------------------------------
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Trigger only once
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // -------------------------------------------------------------
+    // STAT COUNTERS ANIMATION
+    // -------------------------------------------------------------
+    const statsGrid = document.getElementById('statsGrid');
+    let countersAnimated = false;
+
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !countersAnimated) {
+          animateCounters();
+          countersAnimated = true;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    if (statsGrid) {
+      statsObserver.observe(statsGrid);
+    }
+
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'), 10);
+        const suffix = counter.getAttribute('data-suffix') || '';
+        let current = 0;
+        const duration = 2000; // 2 seconds animation
+        const start = performance.now();
+
+        function update(timestamp) {
+          const elapsed = timestamp - start;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function (easeOutQuad)
+          const ease = progress * (2 - progress);
+          current = Math.floor(ease * target);
+
+          if (target >= 1000) {
+            counter.textContent = current.toLocaleString() + suffix;
+          } else {
+            counter.textContent = current + suffix;
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            counter.textContent = target.toLocaleString() + suffix;
+          }
+        }
+        requestAnimationFrame(update);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // COURSES TABS SWITCHER
+    // -------------------------------------------------------------
+    function switchTab(tabName) {
+      const individualPane = document.getElementById('individualPane');
+      const combosPane = document.getElementById('combosPane');
+      const tabButtons = document.querySelectorAll('.tab-btn');
+
+      if (tabName === 'individual') {
+        individualPane.classList.add('active');
+        combosPane.classList.remove('active');
+        tabButtons[0].classList.add('active');
+        tabButtons[1].classList.remove('active');
+      } else {
+        individualPane.classList.remove('active');
+        combosPane.classList.add('active');
+        tabButtons[0].classList.remove('active');
+        tabButtons[1].classList.add('active');
+      }
+    }
+
+    // -------------------------------------------------------------
+    // CONTACT FORM & SUCCESS MODAL
+    // -------------------------------------------------------------
+    const successModalBackdrop = document.getElementById('successModalBackdrop');
+    const contactForm = document.getElementById('contactForm');
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      // Verify validation passes
+      if (contactForm.checkValidity()) {
+        // Show Success Modal
+        successModalBackdrop.style.display = 'flex';
+        // Reset the form fields
+        contactForm.reset();
+      }
+    }
+
+    function closeSuccessModal() {
+      successModalBackdrop.style.display = 'none';
+    }
+
+    function handleBackdropClick(event) {
+      // If the user clicked outside the modal card (directly on the backdrop)
+      if (event.target === successModalBackdrop) {
+        closeSuccessModal();
+      }
+    }
+
+    // Support ESC key to close modal
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && successModalBackdrop.style.display === 'flex') {
+        closeSuccessModal();
+      }
+    });
+
+    // -------------------------------------------------------------
+    // FLOATING WHATSAPP WIDGET LOGIC
+    // -------------------------------------------------------------
+    function toggleWhatsAppWidget(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      const widget = document.getElementById('whatsappWidget');
+      
+      // Update time inside the widget to current time
+      const timeSpan = document.getElementById('whatsappTime');
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      timeSpan.textContent = hours + ':' + minutes + ' ' + ampm;
+
+      if (widget.style.display === 'flex') {
+        widget.style.display = 'none';
+      } else {
+        widget.style.display = 'flex';
+      }
+    }
+
+    function openWhatsAppChat(event) {
+      event.preventDefault();
+      // Open a demo whatsapp chat in new window
+      window.open('https://wa.me/919876543210?text=Hi!%20I%27m%20interested%20in%20TradeAcademy%20courses.', '_blank');
+      toggleWhatsAppWidget();
+    }
+  </script>
+</body>
+</html>
