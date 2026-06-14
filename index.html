@@ -6,37 +6,37 @@
   <title>TradeAcademy - Master the Markets. Trade with Confidence.</title>
   <meta name="description" content="Learn proven FOREX and general trading strategies from experienced traders. Simple, logical, practical trading education for beginners to advanced.">
   
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     /* -------------------------------------------------------------
        DESIGN SYSTEM & CSS VARIABLES
        ------------------------------------------------------------- */
     :root {
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8f9fa;
-      --text-primary: #0a0a0a;
-      --text-secondary: #4b5563;
-      --text-muted: #9ca3af;
+      --bg-primary: #030712; /* Deep high-contrast slate black */
+      --bg-secondary: #0b1329; /* Deep navy/slate surface */
+      --text-primary: #f3f4f6; /* Soft premium white */
+      --text-secondary: #9ca3af; /* Cool grey */
+      --text-muted: #6b7280; /* Darker grey */
       
-      --accent: #3b82f6;
-      --accent-hover: #1d4ed8;
-      --accent-light: #eff6ff;
+      --accent: #3b82f6; /* Vibrant electric blue */
+      --accent-hover: #60a5fa; /* Glowing hover blue */
+      --accent-light: rgba(59, 130, 246, 0.15); /* Translucent glow */
       
-      --bg-dark: #0a0a0a;
-      --bg-dark-surface: #121212;
-      --border-dark: #1f1f1f;
+      --bg-dark: #030712;
+      --bg-dark-surface: #070a13;
+      --border-dark: #1f2937;
       
-      --border-color: #e5e7eb;
-      --success: #10b981;
-      --error: #ef4444;
+      --border-color: rgba(255, 255, 255, 0.08); /* Frosted borders */
+      --success: #10b981; /* Bullish Green */
+      --error: #ef4444; /* Bearish Red */
       --warning: #f59e0b;
       
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --transition-speed: 0.2s;
+      --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      --transition-speed: 0.25s;
     }
 
     /* Reset & Base Styles */
@@ -120,7 +120,7 @@
 
     .btn-primary {
       background-color: var(--accent);
-      color: var(--bg-primary);
+      color: #ffffff;
     }
 
     .btn-primary:hover {
@@ -193,14 +193,29 @@
       left: 0;
       width: 100%;
       height: 72px;
-      background-color: var(--bg-primary);
+      background-color: rgba(3, 7, 18, 0.7);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
       z-index: 1000;
-      transition: border-bottom var(--transition-speed);
-      border-bottom: 1px solid transparent;
+      transition: all var(--transition-speed);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .header-nav.scrolled {
-      border-bottom: 1px solid var(--border-color);
+      background-color: rgba(3, 7, 18, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .scroll-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, #a855f7 50%, var(--success) 100%);
+      width: 0%;
+      z-index: 1001;
+      transition: width 0.05s ease-out;
     }
 
     .nav-container {
@@ -311,21 +326,143 @@
 
     /* SVG Trading Chart Container */
     .chart-container {
-      background-color: #0b0f19; /* High end dark trading card */
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #1f2937;
+      background-color: #070a13; /* Deep high-tech trading background */
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
       padding: 1.5rem;
       width: 100%;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
     }
 
     .trading-chart-svg {
       width: 100%;
       height: auto;
       max-width: 600px;
+      display: block;
+    }
+
+    /* Chart Terminal Styling */
+    .chart-terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+    }
+
+    .chart-ticker-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chart-ticker-name {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text-primary);
+    }
+
+    .chart-ticker-tf {
+      font-size: 0.75rem;
+      background-color: var(--accent-light);
+      color: var(--accent);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .ticker-live-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--success);
+      border-radius: 50%;
+      animation: pulseLive 1.5s infinite alternate;
+    }
+
+    @keyframes pulseLive {
+      from { opacity: 0.4; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    .chart-ohlc-display {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-family: monospace;
+    }
+
+    .ohlc-val {
+      margin-left: 0.15rem;
+      margin-right: 0.6rem;
+      font-weight: 700;
+    }
+    
+    .ohlc-val.up {
+      color: var(--success);
+    }
+    
+    .ohlc-val.down {
+      color: var(--error);
+    }
+
+    .chart-terminal-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chart-timeframes {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .chart-tf-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+      font-family: var(--font-sans);
+    }
+
+    .chart-tf-btn:hover, .chart-tf-btn.active {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 2px;
+      border-radius: 1px;
+      display: inline-block;
+    }
+
+    .legend-color.ma1 {
+      background-color: #3b82f6;
+    }
+
+    .legend-color.ma2 {
+      background-color: #f59e0b;
     }
 
     /* -------------------------------------------------------------
@@ -346,6 +483,25 @@
     .about-avatar-wrapper {
       display: flex;
       justify-content: center;
+    }
+
+    .trader-avatar-container {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      padding: 6px;
+      background: linear-gradient(135deg, var(--accent) 0%, #1d4ed8 100%);
+      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+    }
+
+    .trader-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--bg-primary);
+      display: block;
     }
 
     .about-content h3 {
@@ -459,19 +615,20 @@
 
     /* Course Cards */
     .course-card {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color var(--transition-speed), transform var(--transition-speed);
+      transition: border-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
       position: relative;
     }
 
     .course-card:hover {
       border-color: var(--accent);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.15);
     }
 
     .course-banner {
@@ -551,7 +708,7 @@
       top: 1rem;
       right: 1rem;
       background-color: var(--accent);
-      color: var(--bg-primary);
+      color: #ffffff;
       font-size: 0.6875rem;
       font-weight: 700;
       padding: 0.25rem 0.5rem;
@@ -614,7 +771,7 @@
        ------------------------------------------------------------- */
     .why-choose-us {
       background-color: var(--bg-dark);
-      color: var(--bg-primary);
+      color: var(--text-primary);
     }
 
     .why-choose-us h2 {
@@ -704,7 +861,7 @@
       height: 60px;
       border-radius: 50%;
       background-color: var(--accent);
-      color: var(--bg-primary);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -741,14 +898,19 @@
     }
 
     .testimonial-card {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-secondary);
       border: 1px solid var(--border-color);
       border-left: 4px solid var(--accent);
       padding: 2.25rem 2rem;
-      border-radius: 0 6px 6px 0;
+      border-radius: 0 8px 8px 0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+    }
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .quote-icon {
@@ -813,12 +975,18 @@
     }
 
     .resource-card {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: border-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    .resource-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1);
     }
 
     .thumbnail-wrapper {
@@ -917,15 +1085,16 @@
       font-family: var(--font-sans);
       font-size: 0.9375rem;
       border: 1px solid var(--border-color);
-      border-radius: 4px;
+      border-radius: 6px;
       outline: none;
-      transition: border-color var(--transition-speed);
-      background-color: var(--bg-primary);
+      transition: all var(--transition-speed);
+      background-color: var(--bg-secondary);
       color: var(--text-primary);
     }
 
     .form-control:focus {
       border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
     }
 
     select.form-control {
@@ -967,13 +1136,16 @@
       align-items: center;
       gap: 1.25rem;
       padding: 1.25rem;
+      background-color: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      transition: border-color var(--transition-speed);
+      border-radius: 8px;
+      transition: all var(--transition-speed);
     }
 
     .contact-method-card:hover {
       border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .method-icon {
@@ -1013,9 +1185,9 @@
        ------------------------------------------------------------- */
     .footer-section {
       background-color: var(--bg-dark);
-      color: var(--bg-primary);
+      color: var(--text-secondary);
       padding: 5rem 1.5rem 2.5rem 1.5rem;
-      border-top: 1px solid var(--border-dark);
+      border-top: 1px solid var(--border-color);
     }
 
     .footer-grid {
@@ -1032,11 +1204,11 @@
     }
 
     .footer-col-about .logo {
-      color: var(--bg-primary);
+      color: var(--text-primary);
     }
 
     .footer-tagline {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 0.9375rem;
       line-height: 1.5;
       max-width: 320px;
@@ -1048,7 +1220,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 1.5rem;
-      color: var(--bg-primary);
+      color: var(--text-primary);
     }
 
     .footer-links-grid {
@@ -1092,7 +1264,7 @@
 
     .social-icon-btn:hover {
       background-color: var(--accent);
-      color: var(--bg-primary);
+      color: #ffffff;
       border-color: var(--accent);
     }
 
@@ -1137,13 +1309,14 @@
     }
 
     .modal-card {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       width: 100%;
       max-width: 440px;
       padding: 3rem 2.25rem;
       text-align: center;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
       animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -1184,7 +1357,7 @@
       height: 56px;
       border-radius: 50%;
       background-color: #25d366;
-      color: var(--bg-primary);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1461,9 +1634,9 @@
       bottom: 6.5rem;
       right: 2rem;
       width: 320px;
-      background-color: var(--bg-primary);
+      background-color: var(--bg-secondary);
       border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border-color);
       z-index: 1001;
       display: none;
@@ -1478,7 +1651,7 @@
     }
 
     .whatsapp-widget-header {
-      background-color: #075e54; /* Official WhatsApp dark green */
+      background-color: #005c4b; /* Official WhatsApp dark mode green */
       color: white;
       padding: 1rem;
       display: flex;
@@ -1496,7 +1669,7 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background-color: #128c7e;
+      background-color: #008069;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1527,18 +1700,18 @@
     }
 
     .whatsapp-widget-body {
-      background-color: #e5ddd5; /* Classic WhatsApp chat bg */
+      background-color: #0b141a; /* Dark WhatsApp chat bg */
       padding: 1rem;
       height: 140px;
       overflow-y: auto;
     }
 
     .whatsapp-message {
-      background-color: white;
+      background-color: #1f2c34; /* Dark WhatsApp message bubble */
       padding: 0.75rem;
       border-radius: 0 8px 8px 8px;
       max-width: 85%;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -1547,18 +1720,18 @@
     .whatsapp-message-sender {
       font-size: 0.6875rem;
       font-weight: 700;
-      color: #075e54;
+      color: #00a884; /* Dark WhatsApp green sender */
     }
 
     .whatsapp-message-text {
       font-size: 0.8125rem;
-      color: #303030;
+      color: #e9edef;
       line-height: 1.4;
     }
 
     .whatsapp-message-time {
       font-size: 0.625rem;
-      color: #999;
+      color: #8696a0;
       align-self: flex-end;
     }
 
@@ -1598,6 +1771,458 @@
         width: 290px;
       }
     }
+
+    /* -------------------------------------------------------------
+       12. INTERACTIVE CHECKOUT MODAL & PAYMENTS STYLES
+       ------------------------------------------------------------- */
+    .checkout-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(5, 5, 5, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .checkout-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .checkout-modal {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 8px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      overflow: hidden;
+      transform: translateY(30px) scale(0.98);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .checkout-backdrop.show .checkout-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Header Summary Card */
+    .checkout-header {
+      background: #111827;
+      padding: 1.5rem;
+      border-bottom: 1px solid #1f2937;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .checkout-course-info h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .checkout-course-info p {
+      font-size: 0.8125rem;
+      color: #9ca3af;
+    }
+
+    .checkout-price-info {
+      text-align: right;
+    }
+
+    .checkout-price-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .checkout-close-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .checkout-close-btn:hover {
+      color: #ffffff;
+    }
+
+    /* Checkout Steps & Tabs */
+    .checkout-body {
+      padding: 1.5rem;
+    }
+
+    .payment-tabs-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .payment-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.75rem 0.5rem;
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .payment-tab:hover {
+      background: #1f2937;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    .payment-tab.active {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .payment-tab svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Payment Panel Content */
+    .payment-panel {
+      display: none;
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    .payment-panel.active {
+      display: block;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PayPal Panel */
+    .paypal-mock-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    .paypal-btn {
+      width: 100%;
+      background: #ffc439;
+      color: #111827;
+      font-weight: 700;
+      padding: 0.75rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+      box-shadow: 0 4px 10px rgba(255, 196, 57, 0.25);
+      transition: background 0.2s;
+    }
+
+    .paypal-btn:hover {
+      background: #f2b21c;
+    }
+
+    .paypal-subtitle {
+      font-size: 0.8125rem;
+      color: #9ca3af;
+    }
+
+    /* UPI Panel */
+    .upi-mock-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 0;
+    }
+
+    .upi-qr-wrapper {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .upi-instructions {
+      text-align: center;
+      font-size: 0.8125rem;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+
+    .upi-id-box {
+      background: #111827;
+      border: 1px solid #1f2937;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.875rem;
+      color: #3b82f6;
+      width: 100%;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Crypto Panel */
+    .crypto-mock-box {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .crypto-selectors {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .crypto-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.5rem;
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #9ca3af;
+      transition: all 0.2s;
+    }
+
+    .crypto-pill.active {
+      background: rgba(168, 85, 247, 0.1);
+      border-color: #a855f7;
+      color: #a855f7;
+    }
+
+    .crypto-address-card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .crypto-address-header {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    .crypto-address-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .crypto-address-text {
+      font-family: monospace;
+      font-size: 0.8125rem;
+      color: #ffffff;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: #3b82f6;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .copy-btn:hover {
+      color: #60a5fa;
+    }
+
+    .crypto-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .crypto-input-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    .crypto-input {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 4px;
+      padding: 0.6rem;
+      color: #ffffff;
+      font-family: monospace;
+      font-size: 0.8125rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .crypto-input:focus {
+      border-color: #a855f7;
+    }
+
+    /* Checkout Success State */
+    .checkout-success-view {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      animation: successReveal 0.4s ease-out;
+    }
+
+    @keyframes successReveal {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--success);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+
+    .checkout-success-view h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .checkout-success-view p {
+      font-size: 0.875rem;
+      color: #9ca3af;
+      margin-bottom: 1.75rem;
+      max-width: 340px;
+    }
+
+    .success-receipt-card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      width: 100%;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+    }
+
+    .receipt-label {
+      color: #9ca3af;
+    }
+
+    .receipt-value {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Universal Payment Loader Overlay */
+    .payment-loader-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.95);
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      animation: tabFadeIn 0.2s ease;
+    }
+
+    .payment-spinner-large {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: #3b82f6;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .payment-loader-text {
+      font-size: 0.875rem;
+      color: #ffffff;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -1606,6 +2231,7 @@
        1. NAVBAR SECTION
        --------------------------------------------------------------- -->
   <header class="header-nav" id="headerNav">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
     <div class="nav-container">
       <a href="#home" class="logo">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
@@ -1673,137 +2299,103 @@
       
       <div class="hero-chart reveal">
         <div class="chart-container">
-          <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="trading-chart-svg">
-            <!-- Grid Lines -->
-            <path d="M 40 40 H 560 M 40 90 H 560 M 40 140 H 560 M 40 190 H 560 M 40 240 H 560 M 40 290 H 560 M 40 340 H 560" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
-            <path d="M 110 40 V 340 M 180 40 V 340 M 250 40 V 340 M 320 40 V 340 M 390 40 V 340 M 460 40 V 340 M 530 40 V 340" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
-            
-            <!-- Axis Borders -->
-            <line x1="40" y1="40" x2="40" y2="340" stroke="#374151" stroke-width="1.5"/>
-            <line x1="40" y1="340" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
-            <line x1="560" y1="40" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
-            
-            <!-- Y-Axis Labels (Right Side) -->
-            <text x="568" y="44" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1400</text>
-            <text x="568" y="94" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1360</text>
-            <text x="568" y="144" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1320</text>
-            <text x="568" y="194" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1280</text>
-            <text x="568" y="244" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1240</text>
-            <text x="568" y="294" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1200</text>
-            <text x="568" y="344" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">1.1160</text>
-            
-            <!-- X-Axis Labels (Bottom Side) -->
-            <text x="100" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">09:00</text>
-            <text x="170" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">10:00</text>
-            <text x="240" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">11:00</text>
-            <text x="310" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">12:00</text>
-            <text x="380" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">13:00</text>
-            <text x="450" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">14:00</text>
-            <text x="520" y="355" fill="#9ca3af" font-family="Inter" font-size="9" font-weight="500">15:00</text>
+          <!-- Trading Terminal Header -->
+          <div class="chart-terminal-header">
+            <div class="chart-ticker-info">
+              <span class="chart-ticker-name">EUR/USD</span>
+              <span class="chart-ticker-tf" id="activeTimeframeLabel">1H</span>
+              <span class="ticker-live-dot"></span>
+            </div>
+            <div class="chart-ohlc-display" id="ohlcDisplay">
+              O<span class="ohlc-val" id="ohlc-o">1.1365</span>
+              H<span class="ohlc-val" id="ohlc-h">1.1395</span>
+              L<span class="ohlc-val" id="ohlc-l">1.1355</span>
+              C<span class="ohlc-val text-success" id="ohlc-c">1.1390</span>
+            </div>
+          </div>
+          
+          <div class="chart-terminal-controls">
+            <div class="chart-timeframes">
+              <button class="chart-tf-btn" onclick="changeChartTimeframe('1M')">1M</button>
+              <button class="chart-tf-btn" onclick="changeChartTimeframe('5M')">5M</button>
+              <button class="chart-tf-btn active" onclick="changeChartTimeframe('1H')">1H</button>
+              <button class="chart-tf-btn" onclick="changeChartTimeframe('1D')">1D</button>
+              <button class="chart-tf-btn" onclick="changeChartTimeframe('1W')">1W</button>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-color ma1"></span>MA(9)</span>
+              <span class="legend-item"><span class="legend-color ma2"></span>MA(21)</span>
+            </div>
+          </div>
 
-            <!-- Volume Bars (at bottom) -->
-            <!-- V1 Green -->
-            <rect x="63" y="325" width="14" height="15" fill="#10b981" opacity="0.3"/>
-            <!-- V2 Red -->
-            <rect x="103" y="330" width="14" height="10" fill="#ef4444" opacity="0.3"/>
-            <!-- V3 Green -->
-            <rect x="143" y="315" width="14" height="25" fill="#10b981" opacity="0.3"/>
-            <!-- V4 Red -->
-            <rect x="183" y="328" width="14" height="12" fill="#ef4444" opacity="0.3"/>
-            <!-- V5 Green -->
-            <rect x="223" y="310" width="14" height="30" fill="#10b981" opacity="0.3"/>
-            <!-- V6 Green -->
-            <rect x="263" y="305" width="14" height="35" fill="#10b981" opacity="0.3"/>
-            <!-- V7 Red -->
-            <rect x="303" y="320" width="14" height="20" fill="#ef4444" opacity="0.3"/>
-            <!-- V8 Green -->
-            <rect x="343" y="312" width="14" height="28" fill="#10b981" opacity="0.3"/>
-            <!-- V9 Green -->
-            <rect x="383" y="300" width="14" height="40" fill="#10b981" opacity="0.3"/>
-            <!-- V10 Red -->
-            <rect x="423" y="302" width="14" height="38" fill="#ef4444" opacity="0.3"/>
-            <!-- V11 Green -->
-            <rect x="463" y="318" width="14" height="22" fill="#10b981" opacity="0.3"/>
-            <!-- V12 Green -->
-            <rect x="503" y="304" width="14" height="36" fill="#10b981" opacity="0.3"/>
-
-            <!-- Candlesticks (Wick line + Body rect) -->
-            <!-- C1 Green: Open 1.1240(y280) Close 1.1260(y250) Wick 1.1230-1.1270 -->
-            <line x1="70" y1="235" x2="70" y2="295" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="63" y="250" width="14" height="30" fill="#10b981"/>
-            
-            <!-- C2 Red: Open 1.1260(y250) Close 1.1250(y265) Wick 1.1245-1.1265 -->
-            <line x1="110" y1="242.5" x2="110" y2="272.5" stroke="#ef4444" stroke-width="1.5"/>
-            <rect x="103" y="250" width="14" height="15" fill="#ef4444"/>
-
-            <!-- C3 Green: Open 1.1250(y265) Close 1.1290(y205) Wick 1.1240-1.1300 -->
-            <line x1="150" y1="190" x2="150" y2="280" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="143" y="205" width="14" height="60" fill="#10b981"/>
-
-            <!-- C4 Red: Open 1.1290(y205) Close 1.1280(y220) Wick 1.1275-1.1295 -->
-            <line x1="190" y1="197.5" x2="190" y2="227.5" stroke="#ef4444" stroke-width="1.5"/>
-            <rect x="183" y="205" width="14" height="15" fill="#ef4444"/>
-
-            <!-- C5 Green: Open 1.1280(y220) Close 1.1320(y160) Wick 1.1270-1.1330 -->
-            <line x1="230" y1="145" x2="230" y2="235" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="223" y="160" width="14" height="60" fill="#10b981"/>
-
-            <!-- C6 Green: Open 1.1320(y160) Close 1.1340(y130) Wick 1.1310-1.1350 -->
-            <line x1="270" y1="115" x2="270" y2="175" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="263" y="130" width="14" height="30" fill="#10b981"/>
-
-            <!-- C7 Red: Open 1.1340(y130) Close 1.1325(y152.5) Wick 1.1315-1.1345 -->
-            <line x1="310" y1="122.5" x2="310" y2="167.5" stroke="#ef4444" stroke-width="1.5"/>
-            <rect x="303" y="130" width="14" height="22.5" fill="#ef4444"/>
-
-            <!-- C8 Green: Open 1.1325(y152.5) Close 1.1360(y100) Wick 1.1315-1.1370 -->
-            <line x1="350" y1="90" x2="350" y2="167.5" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="343" y="100" width="14" height="52.5" fill="#10b981"/>
-
-            <!-- C9 Green: Open 1.1360(y100) Close 1.1375(y77.5) Wick 1.1350-1.1385 -->
-            <line x1="390" y1="62.5" x2="390" y2="115" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="383" y="77.5" width="14" height="22.5" fill="#10b981"/>
-
-            <!-- C10 Red: Open 1.1375(y77.5) Close 1.1350(y115) Wick 1.1340-1.1380 -->
-            <line x1="430" y1="70" x2="430" y2="130" stroke="#ef4444" stroke-width="1.5"/>
-            <rect x="423" y="77.5" width="14" height="37.5" fill="#ef4444"/>
-
-            <!-- C11 Green: Open 1.1350(y115) Close 1.1365(y92.5) Wick 1.1335-1.1370 -->
-            <line x1="470" y1="100" x2="470" y2="137.5" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="463" y="92.5" width="14" height="22.5" fill="#10b981"/>
-
-            <!-- C12 Green: Open 1.1365(y92.5) Close 1.1390(y55) Wick 1.1355-1.1395 -->
-            <line x1="510" y1="47.5" x2="510" y2="107.5" stroke="#10b981" stroke-width="1.5"/>
-            <rect x="503" y="55" width="14" height="37.5" fill="#10b981"/>
-
-            <!-- Moving Average Lines -->
-            <!-- MA 1 (Fast - Blue) -->
-            <polyline points="70,270 110,258 150,240 190,215 230,192 270,155 310,142 350,126 390,95 430,98 470,102 510,75" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
-            
-            <!-- MA 2 (Slow - Orange) -->
-            <polyline points="70,310 110,298 150,280 190,260 230,240 270,218 310,198 350,180 390,160 430,148 470,138 510,120" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-
-            <!-- HUD Overlay Target (Active Price point on Candle 9 peak) -->
-            <g>
-              <!-- Dotted Crosshairs -->
-              <line x1="390" y1="40" x2="390" y2="340" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
-              <line x1="40" y1="100" x2="560" y2="100" stroke="#3b82f6" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+          <div class="svg-wrapper" style="position: relative; width: 100%;">
+            <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="trading-chart-svg" id="tradingChartSvg" style="overflow: visible;">
+              <!-- Grid Lines -->
+              <path d="M 40 40 H 560 M 40 90 H 560 M 40 140 H 560 M 40 190 H 560 M 40 240 H 560 M 40 290 H 560 M 40 340 H 560" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
+              <path d="M 110 40 V 340 M 180 40 V 340 M 250 40 V 340 M 320 40 V 340 M 390 40 V 340 M 460 40 V 340 M 530 40 V 340" stroke="#1f2937" stroke-width="0.75" stroke-dasharray="2 4"/>
               
-              <!-- Target Point Glow -->
-              <circle cx="390" cy="100" r="7" fill="#3b82f6" opacity="0.4"/>
-              <circle cx="390" cy="100" r="3" fill="#3b82f6"/>
+              <!-- Axis Borders -->
+              <line x1="40" y1="40" x2="40" y2="340" stroke="#374151" stroke-width="1.5"/>
+              <line x1="40" y1="340" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
+              <line x1="560" y1="40" x2="560" y2="340" stroke="#374151" stroke-width="1.5"/>
               
-              <!-- Y-axis Badge -->
-              <rect x="560" y="90" width="36" height="20" rx="2" fill="#3b82f6"/>
-              <text x="564" y="103" fill="#ffffff" font-family="Inter" font-size="8" font-weight="700">1.1360</text>
+              <!-- Y-Axis Labels (Right Side) -->
+              <g id="chart-y-axis-labels">
+                <text x="568" y="44" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1400</text>
+                <text x="568" y="94" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1360</text>
+                <text x="568" y="144" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1320</text>
+                <text x="568" y="194" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1280</text>
+                <text x="568" y="244" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1240</text>
+                <text x="568" y="294" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1200</text>
+                <text x="568" y="344" fill="#9ca3af" font-family="monospace" font-size="9" font-weight="500">1.1160</text>
+              </g>
               
-              <!-- Tooltip Box (Floating Fintech Style Card) -->
-              <rect x="270" y="45" width="110" height="42" rx="4" fill="#121824" stroke="#3b82f6" stroke-width="1"/>
-              <text x="278" y="58" fill="#3b82f6" font-family="Inter" font-size="8" font-weight="700">BUY SIGNAL</text>
-              <text x="278" y="70" fill="#ffffff" font-family="Inter" font-size="9" font-weight="600">Price: 1.1360</text>
-              <text x="278" y="80" fill="#9ca3af" font-family="Inter" font-size="8" font-weight="400">Vol: 12.4K (MA Cross)</text>
-            </g>
-          </svg>
+              <!-- X-Axis Labels (Bottom Side) -->
+              <g id="chart-x-axis-labels">
+                <!-- Drawn dynamically -->
+              </g>
+
+              <!-- Dynamic Volume Bars -->
+              <g id="chart-volume-group"></g>
+
+              <!-- Dynamic Candlesticks -->
+              <g id="chart-candles-group"></g>
+
+              <!-- Dynamic Moving Averages -->
+              <path id="chart-ma1-path" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+              <path id="chart-ma2-path" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+
+              <!-- Live Price Tracker line & label -->
+              <g id="chart-live-tracker" style="pointer-events: none;">
+                <line id="live-price-line" x1="40" y1="0" x2="560" y2="0" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3 3"/>
+                <rect id="live-price-rect" x="562" y="0" width="36" height="15" rx="2" fill="#10b981"/>
+                <text id="live-price-text" x="564" y="0" fill="#ffffff" font-family="monospace" font-size="8" font-weight="700">1.1360</text>
+              </g>
+
+              <!-- Interactive Crosshair (Cursor overlay) -->
+              <g id="chart-crosshairs" style="display: none; pointer-events: none;">
+                <line id="crosshair-x" x1="0" y1="40" x2="0" y2="340" stroke="rgba(255, 255, 255, 0.4)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                <line id="crosshair-y" x1="40" y1="0" x2="560" y2="0" stroke="rgba(255, 255, 255, 0.4)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                <circle id="crosshair-dot" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+                <rect id="crosshair-y-rect" x="562" y="0" width="36" height="15" rx="2" fill="#3b82f6"/>
+                <text id="crosshair-y-text" x="564" y="0" fill="#ffffff" font-family="monospace" font-size="8" font-weight="700">1.1360</text>
+              </g>
+
+              <!-- Default Buy Signal/HUD (Hidden once hovered, shown initially) -->
+              <g id="chart-default-hud" style="pointer-events: none;">
+                <!-- Target Point Glow -->
+                <circle cx="390" cy="100" r="7" fill="#3b82f6" opacity="0.4"/>
+                <circle cx="390" cy="100" r="3" fill="#3b82f6"/>
+                <!-- Tooltip Box (Floating Fintech Style Card) -->
+                <rect x="270" y="45" width="110" height="42" rx="4" fill="#0b1329" stroke="#3b82f6" stroke-width="1" fill-opacity="0.95"/>
+                <text x="278" y="58" fill="#3b82f6" font-family="Inter" font-size="8" font-weight="700">BUY SIGNAL</text>
+                <text x="278" y="70" fill="#ffffff" font-family="Inter" font-size="9" font-weight="600">Price: 1.1360</text>
+                <text x="278" y="80" fill="#9ca3af" font-family="Inter" font-size="8" font-weight="400">Vol: 12.4K (MA Cross)</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -1815,18 +2407,9 @@
   <section class="about-section" id="about">
     <div class="container about-grid">
       <div class="about-avatar-wrapper reveal">
-        <svg width="220" height="220" viewBox="0 0 200 200" style="display: block;">
-          <circle cx="100" cy="100" r="95" fill="#0a0a0a" stroke="#3b82f6" stroke-width="2.5"/>
-          <circle cx="100" cy="80" r="32" fill="#3b82f6" opacity="0.85"/>
-          <path d="M42 158 C42 122, 158 122, 158 158" fill="#3b82f6" opacity="0.6"/>
-          <path d="M60 178 C60 150, 140 150, 140 178" fill="#3b82f6"/>
-          <circle cx="100" cy="100" r="86" fill="none" stroke="#3b82f6" stroke-width="0.75" stroke-dasharray="4 6" opacity="0.5"/>
-          <!-- Grid line markers to give it a hud interface look -->
-          <line x1="100" y1="5" x2="100" y2="15" stroke="#3b82f6" stroke-width="1.5"/>
-          <line x1="100" y1="185" x2="100" y2="195" stroke="#3b82f6" stroke-width="1.5"/>
-          <line x1="5" y1="100" x2="15" y2="100" stroke="#3b82f6" stroke-width="1.5"/>
-          <line x1="185" y1="100" x2="195" y2="100" stroke="#3b82f6" stroke-width="1.5"/>
-        </svg>
+        <div class="trader-avatar-container">
+          <img src="trader_photo.png" alt="Head Instructor" class="trader-photo">
+        </div>
       </div>
       
       <div class="about-content reveal">
@@ -1887,7 +2470,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.4,999</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('FOREX Fundamentals', 'Rs.4,999')">Enroll Now</button>
             </div>
           </div>
 
@@ -1908,7 +2491,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.6,999</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('FOREX Price Action Mastery', 'Rs.6,999')">Enroll Now</button>
             </div>
           </div>
 
@@ -1928,7 +2511,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.5,999</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('FOREX Scalping Strategies', 'Rs.5,999')">Enroll Now</button>
             </div>
           </div>
 
@@ -1947,7 +2530,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.6,500</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('Day Trading Strategies', 'Rs.6,500')">Enroll Now</button>
             </div>
           </div>
 
@@ -1968,7 +2551,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.7,499</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('Swing Trading Masterclass', 'Rs.7,499')">Enroll Now</button>
             </div>
           </div>
 
@@ -1986,7 +2569,7 @@
                 <span class="course-price-label">Price</span>
                 <span class="course-price">Rs.5,500</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('Options Trading for Beginners', 'Rs.5,500')">Enroll Now</button>
             </div>
           </div>
 
@@ -2023,7 +2606,7 @@
                 <span class="price-original">Rs.11,998</span>
                 <span class="price-discounted">Rs.9,999</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('FOREX Complete Pack', 'Rs.9,999')">Enroll Now</button>
             </div>
           </div>
 
@@ -2053,7 +2636,7 @@
                 <span class="price-original">Rs.13,999</span>
                 <span class="price-discounted">Rs.11,499</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('Day & Swing Combo', 'Rs.11,499')">Enroll Now</button>
             </div>
           </div>
 
@@ -2083,7 +2666,7 @@
                 <span class="price-original">Rs.11,499</span>
                 <span class="price-discounted">Rs.9,499</span>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full">Enroll Now</a>
+              <button class="btn btn-primary btn-full" onclick="openCheckout('Ultimate Trader Pack', 'Rs.9,499')">Enroll Now</button>
             </div>
           </div>
 
@@ -2626,9 +3209,668 @@
   </div>
 
   <!-- ---------------------------------------------------------------
+       13. CHECKOUT MODAL (PAYMENTS)
+       --------------------------------------------------------------- -->
+  <div class="checkout-backdrop" id="checkoutBackdrop" onclick="handleCheckoutBackdropClick(event)">
+    <div class="checkout-modal" id="checkoutModal">
+      <!-- Universal Loader Overlay during payment simulation -->
+      <div class="payment-loader-overlay" id="paymentLoaderOverlay">
+        <div class="payment-spinner-large"></div>
+        <span class="payment-loader-text" id="paymentLoaderText">Processing Payment...</span>
+      </div>
+
+      <!-- Step 1: Active Checkout Form -->
+      <div id="checkoutMainForm">
+        <!-- Header -->
+        <div class="checkout-header">
+          <div class="checkout-course-info">
+            <h3 id="checkoutCourseTitle">FOREX Foundation Course</h3>
+            <p>Enrollment Checkout</p>
+          </div>
+          <div class="checkout-price-info">
+            <span class="checkout-price-val" id="checkoutCoursePrice">$299</span>
+          </div>
+          <button class="checkout-close-btn" onclick="closeCheckoutModal()">&times;</button>
+        </div>
+
+        <!-- Body -->
+        <div class="checkout-body">
+          <div class="payment-tabs-label">Select Payment Method</div>
+          
+          <div class="payment-tabs">
+            <button class="payment-tab active" id="tabPaypal" onclick="switchPaymentTab('paypal')">
+              <!-- PayPal Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+              PayPal
+            </button>
+            <button class="payment-tab" id="tabUpi" onclick="switchPaymentTab('upi')">
+              <!-- UPI/QR Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+                <line x1="7" y1="7" x2="7" y2="7.01"></line>
+                <line x1="17" y1="7" x2="17" y2="7.01"></line>
+                <line x1="17" y1="17" x2="17" y2="17.01"></line>
+                <line x1="7" y1="17" x2="7" y2="17.01"></line>
+              </svg>
+              UPI / QR
+            </button>
+            <button class="payment-tab" id="tabCrypto" onclick="switchPaymentTab('crypto')">
+              <!-- Crypto/Bitcoin Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 6v12M9 9h6M9 15h6"></path>
+              </svg>
+              Crypto
+            </button>
+          </div>
+
+          <!-- PayPal Panel -->
+          <div class="payment-panel active" id="panelPaypal">
+            <div class="paypal-mock-box">
+              <button class="paypal-btn" onclick="simulatePaypalPayment()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.007 11.75c0 3.55-2.88 5.75-6.38 5.75H10.13l-1.42 6.5H4l4.58-20.5h6.63c3.08 0 4.79 1.7 4.79 4.25 0 1.25-.43 2.5-1.25 3.3.85.7 1.25 1.75 1.25 3.1z"></path>
+                </svg>
+                Pay with PayPal
+              </button>
+              <p class="paypal-subtitle">You will be redirected to PayPal to complete your purchase securely.</p>
+            </div>
+          </div>
+
+          <!-- UPI/QR Panel -->
+          <div class="payment-panel" id="panelUpi">
+            <div class="upi-mock-box">
+              <div class="upi-qr-wrapper">
+                <!-- Mock QR Code SVG -->
+                <svg width="150" height="150" viewBox="0 0 100 100" fill="none" stroke="#111827" stroke-width="2">
+                  <!-- QR code corner squares -->
+                  <rect x="5" y="5" width="20" height="20" stroke-width="3"></rect>
+                  <rect x="10" y="10" width="10" height="10" fill="#111827"></rect>
+                  
+                  <rect x="75" y="5" width="20" height="20" stroke-width="3"></rect>
+                  <rect x="80" y="10" width="10" height="10" fill="#111827"></rect>
+                  
+                  <rect x="5" y="75" width="20" height="20" stroke-width="3"></rect>
+                  <rect x="10" y="80" width="10" height="10" fill="#111827"></rect>
+
+                  <!-- Inner mock QR pixels -->
+                  <rect x="35" y="15" width="8" height="8" fill="#111827"></rect>
+                  <rect x="55" y="5" width="12" height="6" fill="#111827"></rect>
+                  <rect x="45" y="30" width="10" height="10" fill="#111827"></rect>
+                  <rect x="15" y="45" width="6" height="12" fill="#111827"></rect>
+                  <rect x="30" y="55" width="15" height="8" fill="#111827"></rect>
+                  <rect x="60" y="45" width="18" height="12" fill="#111827"></rect>
+                  <rect x="80" y="35" width="10" height="15" fill="#111827"></rect>
+                  <rect x="50" y="70" width="12" height="12" fill="#111827"></rect>
+                  <rect x="75" y="75" width="15" height="15" fill="#111827"></rect>
+                  <rect x="35" y="80" width="8" height="10" fill="#111827"></rect>
+                </svg>
+              </div>
+              <p class="upi-instructions">Scan this QR code using any UPI app (GPay, PhonePe, Paytm) to transfer the amount.</p>
+              <div class="upi-id-box" id="upiIdText">pay.tradeacademy@icici</div>
+              <button class="btn btn-primary btn-full" onclick="simulateUpiVerification()" style="margin-top: 0.5rem;">Verify QR Payment</button>
+            </div>
+          </div>
+
+          <!-- Crypto Panel -->
+          <div class="payment-panel" id="panelCrypto">
+            <div class="crypto-mock-box">
+              <div class="crypto-selectors">
+                <button class="crypto-pill active" id="cryptoBTC" onclick="selectCryptoToken('BTC')">
+                  <strong>BTC</strong> Bitcoin
+                </button>
+                <button class="crypto-pill" id="cryptoETH" onclick="selectCryptoToken('ETH')">
+                  <strong>ETH</strong> Ethereum
+                </button>
+                <button class="crypto-pill" id="cryptoUSDC" onclick="selectCryptoToken('USDC')">
+                  <strong>USDC</strong> USD Coin
+                </button>
+              </div>
+
+              <div class="crypto-address-card">
+                <div class="crypto-address-header">Send exact amount to this Address</div>
+                <div class="crypto-address-row">
+                  <span class="crypto-address-text" id="cryptoAddressVal">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span>
+                  <button class="copy-btn" onclick="copyCryptoAddress()" title="Copy Address">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="crypto-input-group">
+                <label class="crypto-input-label" for="cryptoTxHash">Transaction Hash (TxID)</label>
+                <input type="text" class="crypto-input" id="cryptoTxHash" placeholder="Enter transaction hash or wallet address to verify...">
+              </div>
+
+              <button class="btn btn-primary btn-full" onclick="simulateCryptoVerification()">Verify Crypto Payment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Checkout Success -->
+      <div class="checkout-success-view" id="checkoutSuccessView">
+        <div class="success-icon-wrap">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3>Enrollment Confirmed!</h3>
+        <p>Congratulations! You have successfully enrolled. Check your email for login credentials to the academy dashboard.</p>
+        
+        <div class="success-receipt-card">
+          <div class="receipt-row">
+            <span class="receipt-label">Invoice No:</span>
+            <span class="receipt-value" id="receiptInvoiceNo">TA-98317</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Course:</span>
+            <span class="receipt-value" id="receiptCourseName">FOREX Foundation Course</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Payment Method:</span>
+            <span class="receipt-value" id="receiptPaymentMethod">UPI / QR</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Status:</span>
+            <span class="receipt-value" style="color: var(--success);">PAID & ACTIVE</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="closeCheckoutModal()">Start Learning Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------------------------------------------------------------
        JAVASCRIPT LOGIC
        --------------------------------------------------------------- -->
   <script>
+    // -------------------------------------------------------------
+    // INTERACTIVE SVG TRADING CHART ENGINE
+    // -------------------------------------------------------------
+    const chartData = {
+      '1M': [
+        { time: "23:05", open: 1.1350, high: 1.1370, low: 1.1345, close: 1.1365, volume: 14 },
+        { time: "23:06", open: 1.1365, high: 1.1380, low: 1.1360, close: 1.1378, volume: 18 },
+        { time: "23:07", open: 1.1378, high: 1.1390, low: 1.1372, close: 1.1385, volume: 22 },
+        { time: "23:08", open: 1.1385, high: 1.1388, low: 1.1365, close: 1.1368, volume: 15 },
+        { time: "23:09", open: 1.1368, high: 1.1375, low: 1.1350, close: 1.1355, volume: 12 },
+        { time: "23:10", open: 1.1355, high: 1.1372, low: 1.1350, close: 1.1370, volume: 19 },
+        { time: "23:11", open: 1.1370, high: 1.1385, low: 1.1368, close: 1.1382, volume: 24 },
+        { time: "23:12", open: 1.1382, high: 1.1402, low: 1.1380, close: 1.1398, volume: 32 },
+        { time: "23:13", open: 1.1398, high: 1.1408, low: 1.1390, close: 1.1402, volume: 28 },
+        { time: "23:14", open: 1.1402, high: 1.1405, low: 1.1388, close: 1.1390, volume: 16 },
+        { time: "23:15", open: 1.1390, high: 1.1398, low: 1.1380, close: 1.1395, volume: 21 },
+        { time: "23:16", open: 1.1395, high: 1.1420, low: 1.1392, close: 1.1415, volume: 38 }
+      ],
+      '5M': [
+        { time: "22:45", open: 1.1320, high: 1.1340, low: 1.1315, close: 1.1335, volume: 25 },
+        { time: "22:50", open: 1.1335, high: 1.1350, low: 1.1330, close: 1.1342, volume: 30 },
+        { time: "22:55", open: 1.1342, high: 1.1348, low: 1.1335, close: 1.1338, volume: 18 },
+        { time: "23:00", open: 1.1338, high: 1.1355, low: 1.1330, close: 1.1352, volume: 42 },
+        { time: "23:05", open: 1.1352, high: 1.1378, low: 1.1348, close: 1.1372, volume: 55 },
+        { time: "23:10", open: 1.1372, high: 1.1385, low: 1.1365, close: 1.1370, volume: 38 },
+        { time: "23:15", open: 1.1370, high: 1.1375, low: 1.1358, close: 1.1362, volume: 28 },
+        { time: "23:20", open: 1.1362, high: 1.1380, low: 1.1360, close: 1.1378, volume: 45 },
+        { time: "23:25", open: 1.1378, high: 1.1395, low: 1.1375, close: 1.1392, volume: 62 },
+        { time: "23:30", open: 1.1392, high: 1.1398, low: 1.1382, close: 1.1385, volume: 33 },
+        { time: "23:35", open: 1.1385, high: 1.1402, low: 1.1380, close: 1.1398, volume: 49 },
+        { time: "23:40", open: 1.1398, high: 1.1425, low: 1.1395, close: 1.1420, volume: 75 }
+      ],
+      '1H': [
+        { time: "09:00", open: 1.1240, high: 1.1270, low: 1.1230, close: 1.1260, volume: 150 },
+        { time: "10:00", open: 1.1260, high: 1.1265, low: 1.1245, close: 1.1250, volume: 110 },
+        { time: "11:00", open: 1.1250, high: 1.1300, low: 1.1240, close: 1.1290, volume: 250 },
+        { time: "12:00", open: 1.1290, high: 1.1295, low: 1.1275, close: 1.1280, volume: 120 },
+        { time: "13:00", open: 1.1280, high: 1.1330, low: 1.1270, close: 1.1320, volume: 300 },
+        { time: "14:00", open: 1.1320, high: 1.1350, low: 1.1310, close: 1.1340, volume: 350 },
+        { time: "15:00", open: 1.1340, high: 1.1345, low: 1.1315, close: 1.1325, volume: 200 },
+        { time: "16:00", open: 1.1325, high: 1.1370, low: 1.1315, close: 1.1360, volume: 280 },
+        { time: "17:00", open: 1.1360, high: 1.1385, low: 1.1350, close: 1.1375, volume: 400 },
+        { time: "18:00", open: 1.1375, high: 1.1380, low: 1.1340, close: 1.1350, volume: 380 },
+        { time: "19:00", open: 1.1350, high: 1.1370, low: 1.1335, close: 1.1365, volume: 220 },
+        { time: "20:00", open: 1.1365, high: 1.1395, low: 1.1355, close: 1.1390, volume: 360 }
+      ],
+      '1D': [
+        { time: "Jun 02", open: 1.1480, high: 1.1510, low: 1.1460, close: 1.1495, volume: 1200 },
+        { time: "Jun 03", open: 1.1495, high: 1.1505, low: 1.1440, close: 1.1450, volume: 1500 },
+        { time: "Jun 04", open: 1.1450, high: 1.1465, low: 1.1410, close: 1.1425, volume: 1100 },
+        { time: "Jun 05", open: 1.1425, high: 1.1430, low: 1.1375, close: 1.1385, volume: 1800 },
+        { time: "Jun 08", open: 1.1385, high: 1.1410, low: 1.1360, close: 1.1398, volume: 1400 },
+        { time: "Jun 09", open: 1.1398, high: 1.1405, low: 1.1350, close: 1.1360, volume: 1600 },
+        { time: "Jun 10", open: 1.1360, high: 1.1380, low: 1.1330, close: 1.1348, volume: 1250 },
+        { time: "Jun 11", open: 1.1348, high: 1.1375, low: 1.1325, close: 1.1365, volume: 1700 },
+        { time: "Jun 12", open: 1.1365, high: 1.1398, low: 1.1360, close: 1.1388, volume: 1950 },
+        { time: "Jun 13", open: 1.1388, high: 1.1395, low: 1.1350, close: 1.1358, volume: 1300 },
+        { time: "Jun 14", open: 1.1358, high: 1.1382, low: 1.1345, close: 1.1372, volume: 1550 },
+        { time: "Jun 15", open: 1.1372, high: 1.1415, low: 1.1368, close: 1.1405, volume: 2200 }
+      ],
+      '1W': [
+        { time: "Mar 23", open: 1.0850, high: 1.0980, low: 1.0810, close: 1.0960, volume: 5500 },
+        { time: "Mar 30", open: 1.0960, high: 1.1050, low: 1.0920, close: 1.1020, volume: 6200 },
+        { time: "Apr 06", open: 1.1020, high: 1.1040, low: 1.0890, close: 1.0935, volume: 4800 },
+        { time: "Apr 13", open: 1.0935, high: 1.1120, low: 1.0910, close: 1.1080, volume: 7100 },
+        { time: "Apr 20", open: 1.1080, high: 1.1180, low: 1.1030, close: 1.1150, volume: 8300 },
+        { time: "Apr 27", open: 1.1150, high: 1.1210, low: 1.1120, close: 1.1185, volume: 6900 },
+        { time: "May 04", open: 1.1185, high: 1.1205, low: 1.1050, close: 1.1080, volume: 5900 },
+        { time: "May 11", open: 1.1080, high: 1.1240, low: 1.1060, close: 1.1215, volume: 7400 },
+        { time: "May 18", open: 1.1215, high: 1.1380, low: 1.1190, close: 1.1350, volume: 9800 },
+        { time: "May 25", open: 1.1350, high: 1.1390, low: 1.1280, close: 1.1320, volume: 8100 },
+        { time: "Jun 01", open: 1.1320, high: 1.1430, low: 1.1300, close: 1.1408, volume: 8900 },
+        { time: "Jun 08", open: 1.1408, high: 1.1465, low: 1.1380, close: 1.1445, volume: 10500 }
+      ]
+    };
+
+    let activeTimeframe = '1H';
+    let currentTickerPrice = 1.1390;
+    let tickerInterval = null;
+    let isHoveringChart = false;
+
+    const svgEl = document.getElementById('tradingChartSvg');
+    const candlesGroup = document.getElementById('chart-candles-group');
+    const volumeGroup = document.getElementById('chart-volume-group');
+    const ma1Path = document.getElementById('chart-ma1-path');
+    const ma2Path = document.getElementById('chart-ma2-path');
+    const xAxisLabelsGroup = document.getElementById('chart-x-axis-labels');
+
+    function getPriceY(price, minPrice, maxPrice) {
+      const scale = 300 / (maxPrice - minPrice);
+      return 340 - (price - minPrice) * scale;
+    }
+
+    function getYPrice(y, minPrice, maxPrice) {
+      const scale = (maxPrice - minPrice) / 300;
+      return maxPrice - (y - 40) * scale;
+    }
+
+    function drawChart(tf) {
+      activeTimeframe = tf;
+      document.getElementById('activeTimeframeLabel').textContent = tf;
+      
+      const data = chartData[tf];
+      if (!data || data.length === 0) return;
+
+      // Clean group contents
+      candlesGroup.innerHTML = '';
+      volumeGroup.innerHTML = '';
+      xAxisLabelsGroup.innerHTML = '';
+
+      // Find min and max price for scaling
+      let minPrice = Infinity;
+      let maxPrice = -Infinity;
+      let maxVol = 0;
+      data.forEach(d => {
+        if (d.low < minPrice) minPrice = d.low;
+        if (d.high > maxPrice) maxPrice = d.high;
+        if (d.volume > maxVol) maxVol = d.volume;
+      });
+
+      // Add padding to price range
+      const padding = (maxPrice - minPrice) * 0.1 || 0.002;
+      maxPrice += padding;
+      minPrice -= padding;
+
+      // Update Y-axis labels dynamically
+      const yAxisLabels = document.getElementById('chart-y-axis-labels');
+      yAxisLabels.innerHTML = '';
+      const step = (maxPrice - minPrice) / 6;
+      for (let i = 0; i <= 6; i++) {
+        const p = maxPrice - i * step;
+        const y = 44 + i * 50;
+        const textNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textNode.setAttribute('x', '568');
+        textNode.setAttribute('y', y.toString());
+        textNode.setAttribute('fill', '#9ca3af');
+        textNode.setAttribute('font-family', 'monospace');
+        textNode.setAttribute('font-size', '9');
+        textNode.setAttribute('font-weight', '500');
+        textNode.textContent = p.toFixed(4);
+        yAxisLabels.appendChild(textNode);
+      }
+
+      // Draw Candlesticks & Volume Bars
+      const pointsMA1 = [];
+      const pointsMA2 = [];
+
+      data.forEach((d, idx) => {
+        const x = 70 + idx * 40;
+        
+        // Draw X Axis Label
+        const textNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textNode.setAttribute('x', x.toString());
+        textNode.setAttribute('y', '355');
+        textNode.setAttribute('fill', '#9ca3af');
+        textNode.setAttribute('font-family', 'monospace');
+        textNode.setAttribute('font-size', '8');
+        textNode.setAttribute('font-weight', '500');
+        textNode.setAttribute('text-anchor', 'middle');
+        textNode.textContent = d.time;
+        xAxisLabelsGroup.appendChild(textNode);
+
+        const yOpen = getPriceY(d.open, minPrice, maxPrice);
+        const yClose = getPriceY(d.close, minPrice, maxPrice);
+        const yHigh = getPriceY(d.high, minPrice, maxPrice);
+        const yLow = getPriceY(d.low, minPrice, maxPrice);
+
+        const isBullish = d.close >= d.open;
+        const color = isBullish ? 'var(--success)' : 'var(--error)';
+
+        // Draw Wick
+        const wickLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        wickLine.setAttribute('x1', x.toString());
+        wickLine.setAttribute('y1', yHigh.toString());
+        wickLine.setAttribute('x2', x.toString());
+        wickLine.setAttribute('y2', yLow.toString());
+        wickLine.setAttribute('stroke', color);
+        wickLine.setAttribute('stroke-width', '1.5');
+        wickLine.setAttribute('id', `wick-${idx}`);
+        candlesGroup.appendChild(wickLine);
+
+        // Draw Body Rect
+        const bodyRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        bodyRect.setAttribute('x', (x - 7).toString());
+        bodyRect.setAttribute('y', Math.min(yOpen, yClose).toString());
+        bodyRect.setAttribute('width', '14');
+        bodyRect.setAttribute('height', Math.max(Math.abs(yOpen - yClose), 1.5).toString());
+        bodyRect.setAttribute('fill', color);
+        bodyRect.setAttribute('id', `candle-${idx}`);
+        candlesGroup.appendChild(bodyRect);
+
+        // Draw Volume Bar
+        const volHeight = (d.volume / maxVol) * 45; // Max height 45px
+        const volRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        volRect.setAttribute('x', (x - 7).toString());
+        volRect.setAttribute('y', (340 - volHeight).toString());
+        volRect.setAttribute('width', '14');
+        volRect.setAttribute('height', volHeight.toString());
+        volRect.setAttribute('fill', color);
+        volRect.setAttribute('opacity', '0.25');
+        volRect.setAttribute('id', `vol-${idx}`);
+        volumeGroup.appendChild(volRect);
+
+        // Calculate Simple Moving Averages
+        let sum1 = 0;
+        let count1 = 0;
+        for (let j = Math.max(0, idx - 2); j <= idx; j++) {
+          sum1 += data[j].close;
+          count1++;
+        }
+        const ma1Val = sum1 / count1;
+        pointsMA1.push(`${x},${getPriceY(ma1Val, minPrice, maxPrice)}`);
+
+        let sum2 = 0;
+        let count2 = 0;
+        for (let j = Math.max(0, idx - 5); j <= idx; j++) {
+          sum2 += data[j].close;
+          count2++;
+        }
+        const ma2Val = sum2 / count2;
+        pointsMA2.push(`${x},${getPriceY(ma2Val, minPrice, maxPrice)}`);
+      });
+
+      // Update MA paths
+      ma1Path.setAttribute('d', 'M ' + pointsMA1.join(' L '));
+      ma2Path.setAttribute('d', 'M ' + pointsMA2.join(' L '));
+
+      // Reset Live Tracker
+      currentTickerPrice = data[data.length - 1].close;
+      updateLiveTracker(minPrice, maxPrice);
+
+      svgEl.dataset.minPrice = minPrice;
+      svgEl.dataset.maxPrice = maxPrice;
+    }
+
+    function updateLiveTracker(minPrice, maxPrice) {
+      if (!minPrice || !maxPrice) {
+        minPrice = parseFloat(svgEl.dataset.minPrice);
+        maxPrice = parseFloat(svgEl.dataset.maxPrice);
+      }
+      
+      const y = getPriceY(currentTickerPrice, minPrice, maxPrice);
+      
+      // Update line
+      const line = document.getElementById('live-price-line');
+      line.setAttribute('y1', y.toString());
+      line.setAttribute('y2', y.toString());
+
+      // Update rect badge
+      const rect = document.getElementById('live-price-rect');
+      rect.setAttribute('y', (y - 7.5).toString());
+
+      // Update text
+      const text = document.getElementById('live-price-text');
+      text.setAttribute('y', (y + 3.5).toString());
+      text.textContent = currentTickerPrice.toFixed(4);
+    }
+
+    function changeChartTimeframe(tf) {
+      const buttons = document.querySelectorAll('.chart-tf-btn');
+      buttons.forEach(btn => {
+        if (btn.textContent === tf) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      drawChart(tf);
+    }
+
+    function startPriceTicker() {
+      if (tickerInterval) clearInterval(tickerInterval);
+
+      tickerInterval = setInterval(() => {
+        const tfData = chartData[activeTimeframe];
+        const lastIdx = tfData.length - 1;
+        const lastCandle = tfData[lastIdx];
+        
+        const minPrice = parseFloat(svgEl.dataset.minPrice);
+        const maxPrice = parseFloat(svgEl.dataset.maxPrice);
+
+        const bias = activeTimeframe === '1W' || activeTimeframe === '1H' ? 0.05 : -0.05;
+        const change = (Math.random() - 0.5 + bias) * 0.0004;
+        
+        const oldPrice = currentTickerPrice;
+        currentTickerPrice += change;
+
+        if (currentTickerPrice > maxPrice) currentTickerPrice = maxPrice - 0.0002;
+        if (currentTickerPrice < minPrice) currentTickerPrice = minPrice + 0.0002;
+
+        lastCandle.close = currentTickerPrice;
+        if (currentTickerPrice > lastCandle.high) lastCandle.high = currentTickerPrice;
+        if (currentTickerPrice < lastCandle.low) lastCandle.low = currentTickerPrice;
+
+        const x = 70 + lastIdx * 40;
+        const yOpen = getPriceY(lastCandle.open, minPrice, maxPrice);
+        const yClose = getPriceY(lastCandle.close, minPrice, maxPrice);
+        const yHigh = getPriceY(lastCandle.high, minPrice, maxPrice);
+        const yLow = getPriceY(lastCandle.low, minPrice, maxPrice);
+
+        const isBullish = lastCandle.close >= lastCandle.open;
+        const color = isBullish ? 'var(--success)' : 'var(--error)';
+
+        const wick = document.getElementById(`wick-${lastIdx}`);
+        if (wick) {
+          wick.setAttribute('y1', yHigh.toString());
+          wick.setAttribute('y2', yLow.toString());
+          wick.setAttribute('stroke', color);
+        }
+
+        const body = document.getElementById(`candle-${lastIdx}`);
+        if (body) {
+          body.setAttribute('y', Math.min(yOpen, yClose).toString());
+          body.setAttribute('height', Math.max(Math.abs(yOpen - yClose), 1.5).toString());
+          body.setAttribute('fill', color);
+        }
+
+        updateLiveTracker(minPrice, maxPrice);
+
+        const priceRect = document.getElementById('live-price-rect');
+        const priceText = document.getElementById('ohlc-c');
+        const priceLine = document.getElementById('live-price-line');
+        const isPriceUp = currentTickerPrice >= oldPrice;
+        
+        const flashColor = isPriceUp ? 'var(--success)' : 'var(--error)';
+        priceRect.setAttribute('fill', flashColor);
+        priceLine.setAttribute('stroke', flashColor);
+        
+        if (!isHoveringChart) {
+          document.getElementById('ohlc-o').textContent = lastCandle.open.toFixed(4);
+          document.getElementById('ohlc-h').textContent = lastCandle.high.toFixed(4);
+          document.getElementById('ohlc-l').textContent = lastCandle.low.toFixed(4);
+          
+          priceText.textContent = lastCandle.close.toFixed(4);
+          priceText.className = `ohlc-val ${isBullish ? 'up' : 'down'}`;
+        }
+
+      }, 1500);
+    }
+
+    function setupChartInteractivity() {
+      const defaultHud = document.getElementById('chart-default-hud');
+      const crosshairs = document.getElementById('chart-crosshairs');
+      const crosshairX = document.getElementById('crosshair-x');
+      const crosshairY = document.getElementById('crosshair-y');
+      const crosshairDot = document.getElementById('crosshair-dot');
+      const crosshairYRect = document.getElementById('crosshair-y-rect');
+      const crosshairYText = document.getElementById('crosshair-y-text');
+
+      svgEl.addEventListener('mouseenter', () => {
+        isHoveringChart = true;
+        defaultHud.style.display = 'none';
+        crosshairs.style.display = 'block';
+      });
+
+      svgEl.addEventListener('mouseleave', () => {
+        isHoveringChart = false;
+        crosshairs.style.display = 'none';
+        
+        const tfData = chartData[activeTimeframe];
+        const lastCandle = tfData[tfData.length - 1];
+        document.getElementById('ohlc-o').textContent = lastCandle.open.toFixed(4);
+        document.getElementById('ohlc-h').textContent = lastCandle.high.toFixed(4);
+        document.getElementById('ohlc-l').textContent = lastCandle.low.toFixed(4);
+        document.getElementById('ohlc-c').textContent = lastCandle.close.toFixed(4);
+        document.getElementById('ohlc-c').className = `ohlc-val ${lastCandle.close >= lastCandle.open ? 'up' : 'down'}`;
+      });
+
+      svgEl.addEventListener('mousemove', (event) => {
+        const rect = svgEl.getBoundingClientRect();
+        const svgX = ((event.clientX - rect.left) / rect.width) * 600;
+        const svgY = ((event.clientY - rect.top) / rect.height) * 400;
+
+        if (svgX < 40 || svgX > 560 || svgY < 40 || svgY > 340) {
+          crosshairs.style.display = 'none';
+          return;
+        } else {
+          crosshairs.style.display = 'block';
+        }
+
+        const minPrice = parseFloat(svgEl.dataset.minPrice);
+        const maxPrice = parseFloat(svgEl.dataset.maxPrice);
+
+        const data = chartData[activeTimeframe];
+        const colIdx = Math.max(0, Math.min(data.length - 1, Math.round((svgX - 70) / 40)));
+        const snappedX = 70 + colIdx * 40;
+
+        const candle = data[colIdx];
+
+        crosshairX.setAttribute('x1', snappedX.toString());
+        crosshairX.setAttribute('x2', snappedX.toString());
+        crosshairY.setAttribute('y1', svgY.toString());
+        crosshairY.setAttribute('y2', svgY.toString());
+
+        const snappedDotY = getPriceY(candle.close, minPrice, maxPrice);
+        crosshairDot.setAttribute('cx', snappedX.toString());
+        crosshairDot.setAttribute('cy', snappedDotY.toString());
+
+        crosshairYRect.setAttribute('y', (svgY - 7.5).toString());
+        crosshairYText.setAttribute('y', (svgY + 3.5).toString());
+
+        const hoveredPrice = getYPrice(svgY, minPrice, maxPrice);
+        crosshairYText.textContent = hoveredPrice.toFixed(4);
+
+        document.getElementById('ohlc-o').textContent = candle.open.toFixed(4);
+        document.getElementById('ohlc-h').textContent = candle.high.toFixed(4);
+        document.getElementById('ohlc-l').textContent = candle.low.toFixed(4);
+        document.getElementById('ohlc-c').textContent = candle.close.toFixed(4);
+
+        const isBullish = candle.close >= candle.open;
+        document.getElementById('ohlc-c').className = `ohlc-val ${isBullish ? 'up' : 'down'}`;
+      });
+    }
+
+    // Call chart initialization on DOM load
+    window.addEventListener('DOMContentLoaded', () => {
+      drawChart('1H');
+      startPriceTicker();
+      setupChartInteractivity();
+    });
+
+    // -------------------------------------------------------------
+    // SCROLL PROGRESS BAR LOGIC
+    // -------------------------------------------------------------
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      const progress = document.getElementById('scrollProgress');
+      if (progress) {
+        progress.style.width = scrolled + '%';
+      }
+    });
+
+    // -------------------------------------------------------------
+    // 3D CARD TILT EFFECT
+    // -------------------------------------------------------------
+    function setupCardTilts() {
+      const cards = document.querySelectorAll('.course-card, .resource-card, .why-card');
+      
+      cards.forEach(card => {
+        card.style.transition = 'transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color var(--transition-speed)';
+        
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const maxRotateX = 6;
+          const maxRotateY = 6;
+          
+          const rotateX = ((centerY - y) / centerY) * maxRotateX;
+          const rotateY = ((x - centerX) / centerX) * maxRotateY;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.025)`;
+          card.style.boxShadow = `
+            ${-rotateY * 1.5}px ${rotateX * 1.5}px 30px rgba(59, 130, 246, 0.15), 
+            0 10px 20px rgba(0, 0, 0, 0.4)
+          `;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+          card.style.boxShadow = '';
+        });
+      });
+    }
+
+    // Call on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setupCardTilts();
+    });
+
     // -------------------------------------------------------------
     // MOBILE NAVIGATION MENU
     // -------------------------------------------------------------
@@ -2838,6 +4080,190 @@
       window.open('https://wa.me/919876543210?text=Hi!%20I%27m%20interested%20in%20TradeAcademy%20courses.', '_blank');
       toggleWhatsAppWidget();
     }
+
+    // -------------------------------------------------------------
+    // INTERACTIVE CHECKOUT & MULTI-PAYMENT FLOW SIMULATION
+    // -------------------------------------------------------------
+    const checkoutBackdrop = document.getElementById('checkoutBackdrop');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const checkoutMainForm = document.getElementById('checkoutMainForm');
+    const checkoutSuccessView = document.getElementById('checkoutSuccessView');
+    const paymentLoaderOverlay = document.getElementById('paymentLoaderOverlay');
+    const paymentLoaderText = document.getElementById('paymentLoaderText');
+    
+    const checkoutCourseTitle = document.getElementById('checkoutCourseTitle');
+    const checkoutCoursePrice = document.getElementById('checkoutCoursePrice');
+    const receiptCourseName = document.getElementById('receiptCourseName');
+    const receiptInvoiceNo = document.getElementById('receiptInvoiceNo');
+    const receiptPaymentMethod = document.getElementById('receiptPaymentMethod');
+
+    // Crypto details database
+    const cryptoAddresses = {
+      'BTC': '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+      'ETH': '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+      'USDC': '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
+    };
+
+    let activeCheckoutState = {
+      title: '',
+      price: '',
+      method: 'paypal',
+      cryptoToken: 'BTC'
+    };
+
+    function openCheckout(courseTitle, coursePrice) {
+      activeCheckoutState.title = courseTitle;
+      activeCheckoutState.price = coursePrice;
+      activeCheckoutState.method = 'paypal'; // reset to default tab
+      activeCheckoutState.cryptoToken = 'BTC';
+
+      // Update UI
+      checkoutCourseTitle.textContent = courseTitle;
+      checkoutCoursePrice.textContent = coursePrice;
+      
+      // Reset views
+      checkoutMainForm.style.display = 'block';
+      checkoutSuccessView.style.display = 'none';
+      paymentLoaderOverlay.style.display = 'none';
+
+      // Reset tabs and panels
+      switchPaymentTab('paypal');
+      selectCryptoToken('BTC');
+      document.getElementById('cryptoTxHash').value = '';
+
+      // Open Modal
+      checkoutBackdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckoutModal() {
+      checkoutBackdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    function handleCheckoutBackdropClick(event) {
+      if (event.target === checkoutBackdrop) {
+        closeCheckoutModal();
+      }
+    }
+
+    // Tab Switching
+    function switchPaymentTab(method) {
+      activeCheckoutState.method = method;
+      
+      // Update Tab Styles
+      const tabs = ['paypal', 'upi', 'crypto'];
+      tabs.forEach(t => {
+        const tabEl = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const panelEl = document.getElementById(`panel${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        
+        if (t === method) {
+          tabEl.classList.add('active');
+          panelEl.classList.add('active');
+        } else {
+          tabEl.classList.remove('active');
+          panelEl.classList.remove('active');
+        }
+      });
+    }
+
+    // Crypto Token Selection
+    function selectCryptoToken(token) {
+      activeCheckoutState.cryptoToken = token;
+      
+      const tokens = ['BTC', 'ETH', 'USDC'];
+      tokens.forEach(tok => {
+        const pill = document.getElementById(`crypto${tok}`);
+        if (tok === token) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      // Update Address text
+      document.getElementById('cryptoAddressVal').textContent = cryptoAddresses[token];
+    }
+
+    // Copy to clipboard helper
+    function copyCryptoAddress() {
+      const addrText = document.getElementById('cryptoAddressVal').textContent;
+      navigator.clipboard.writeText(addrText).then(() => {
+        // Simple visual feedback
+        const copyBtn = document.querySelector('.copy-btn');
+        const originalHTML = copyBtn.innerHTML;
+        copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+        setTimeout(() => {
+          copyBtn.innerHTML = originalHTML;
+        }, 1500);
+      });
+    }
+
+    // Payment Loader Simulation
+    function triggerPaymentLoader(text, callback) {
+      paymentLoaderText.textContent = text;
+      paymentLoaderOverlay.style.display = 'flex';
+      
+      setTimeout(() => {
+        paymentLoaderOverlay.style.display = 'none';
+        callback();
+      }, 1500);
+    }
+
+    // PayPal flow
+    function simulatePaypalPayment() {
+      triggerPaymentLoader('Connecting to PayPal Secure gateway...', () => {
+        triggerPaymentLoader('Authorizing Transaction...', () => {
+          showSuccessPayment('PayPal / Card');
+        });
+      });
+    }
+
+    // UPI/QR flow
+    function simulateUpiVerification() {
+      triggerPaymentLoader('Verifying QR Code Payment on UPI network...', () => {
+        showSuccessPayment('UPI / QR');
+      });
+    }
+
+    // Crypto flow
+    function simulateCryptoVerification() {
+      const txHash = document.getElementById('cryptoTxHash').value.trim();
+      if (!txHash) {
+        alert('Please enter a Transaction Hash or Wallet Address to verify transaction.');
+        return;
+      }
+      
+      triggerPaymentLoader('Searching mempool for transaction hash...', () => {
+        triggerPaymentLoader('Verifying block confirmations...', () => {
+          showSuccessPayment(`Crypto (${activeCheckoutState.cryptoToken})`);
+        });
+      });
+    }
+
+    // Render Success Panel
+    function showSuccessPayment(methodName) {
+      // Set receipt data
+      receiptCourseName.textContent = activeCheckoutState.title;
+      receiptPaymentMethod.textContent = methodName;
+      
+      // Generate Invoice number
+      const randomInvoice = 'TA-' + Math.floor(10000 + Math.random() * 90000);
+      receiptInvoiceNo.textContent = randomInvoice;
+
+      // Swap views
+      checkoutMainForm.style.display = 'none';
+      checkoutSuccessView.style.display = 'flex';
+    }
+
+    // ESC key support
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        if (checkoutBackdrop.classList.contains('show')) {
+          closeCheckoutModal();
+        }
+      }
+    });
   </script>
 </body>
 </html>
